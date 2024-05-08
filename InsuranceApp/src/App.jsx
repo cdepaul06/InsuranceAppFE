@@ -2,8 +2,8 @@ import "./App.css";
 import "devextreme/dist/css/dx.dark.css";
 import { Popup, TextBox, Button } from "devextreme-react";
 import { DefaultComponentConfig } from "./DevExtreme/DefaultComponentConfig";
-import { useCallback, useState, useEffect } from "react";
-import axios from "axios";
+import { useCallback, useState } from "react";
+import { handleApiCall } from "./API";
 
 const App = ({}) => {
   const [user, setUser] = useState({});
@@ -17,22 +17,16 @@ const App = ({}) => {
   );
 
   const handleLogin = useCallback(() => {
-    axios
-      .post("http://localhost:7263/api/login", user, {
-        headers: {
-          method: "POST",
-          "Content-Type": "application/json",
-          mode: "cors",
-          body: JSON.stringify(user),
-        },
-      })
+    handleApiCall("POST", "auth/login", user)
       .then((res) => {
-        console.log(res);
+        if (res) {
+          console.log(res);
+        }
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
-  }, [JSON.stringify(user)]);
+  }, [user]);
 
   const renderContent = useCallback(() => {
     return (
