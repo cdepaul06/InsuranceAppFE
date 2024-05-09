@@ -15,7 +15,8 @@ export const apiCall = async (
   endpoint,
   queryParams = "",
   body = {},
-  headers = {}
+  headers = {},
+  ...rest
 ) => {
   const config = {
     method: method,
@@ -25,6 +26,7 @@ export const apiCall = async (
       ...headers,
     },
     data: body,
+    ...rest,
   };
 
   try {
