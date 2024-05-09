@@ -3,7 +3,7 @@ import "devextreme/dist/css/dx.dark.css";
 import { Popup, TextBox, Button } from "devextreme-react";
 import { DefaultComponentConfig } from "./DevExtreme/DefaultComponentConfig";
 import { useCallback, useState } from "react";
-import { handleApiCall } from "./API";
+import { apiCall } from "./API";
 
 const App = ({}) => {
   const [user, setUser] = useState({});
@@ -17,7 +17,7 @@ const App = ({}) => {
   );
 
   const handleLogin = useCallback(() => {
-    handleApiCall("POST", "auth/login", user)
+    apiCall("POST", "auth/login", "", user)
       .then((res) => {
         if (res) {
           console.log(res);

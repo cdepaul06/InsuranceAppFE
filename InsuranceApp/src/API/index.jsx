@@ -5,19 +5,21 @@ import axios from "axios";
  *
  * @param {string} method - The HTTP method to use (GET, POST, PUT, DELETE, etc.)
  * @param {string} endpoint - The API endpoint URL.
+ * @param {Object} queryParams - Optional query parameters to be included in the request.
  * @param {Object} body - Optional data to be sent with the request (for POST, PUT).
  * @param {Object} headers - Optional headers to be included in the request.
  * @returns {Promise} - A Promise that resolves to the response of the API call.
  */
-export const handleApiCall = async (
+export const apiCall = async (
   method,
   endpoint,
+  queryParams = "",
   body = {},
   headers = {}
 ) => {
   const config = {
     method: method,
-    url: `https://localhost:5000/api/${endpoint}`,
+    url: `https://localhost:5000/api/${endpoint}/${queryParams}`,
     headers: {
       "Content-Type": "application/json",
       ...headers,
@@ -27,9 +29,9 @@ export const handleApiCall = async (
 
   try {
     const response = await axios(config);
-    return response.data; // Returning just the data from the response object
+    return response.data;
   } catch (error) {
     console.error("API call failed:", error);
-    throw error; // Rethrowing the error to be handled by the caller
+    throw error;
   }
 };
