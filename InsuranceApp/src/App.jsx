@@ -2,13 +2,13 @@ import "./App.css";
 import "devextreme/dist/css/dx.dark.css";
 import { Popup, TextBox, Button } from "devextreme-react";
 import { DefaultComponentConfig } from "./DevExtreme/DefaultComponentConfig";
-import Validator, { RequiredRule } from "devextreme-react/validator";
 import { useCallback, useState } from "react";
 import { apiCall } from "./API";
 
 const App = ({}) => {
   const [user, setUser] = useState({});
   const [forgotPassword, setForgotPassword] = useState(false);
+  const [newAccount, setNewAccount] = useState(false);
 
   const handleChange = useCallback(
     ({ value }) =>
@@ -19,6 +19,10 @@ const App = ({}) => {
   );
 
   const handleLogin = useCallback(() => {
+    if (!user.email || !user.password) {
+      return;
+    }
+
     apiCall("POST", "auth/login", "", user)
       .then((res) => {
         if (res) {
@@ -42,6 +46,18 @@ const App = ({}) => {
       });
   }, [user]);
 
+  const handleNewAccount = useCallback(() => {
+    apiCall("POST", "auth/register", "", user)
+      .then((res) => {
+        if (res) {
+          console.log(res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [user]);
+
   const renderContent = useCallback(() => {
     return (
       <div className='flex flex-col items-center h-[100%]'>
@@ -49,11 +65,8 @@ const App = ({}) => {
           <TextBox
             label='Email *'
             onValueChanged={(e) => handleChange(e)("email")}
-          >
-            <Validator>
-              <RequiredRule message='Email is required' />
-            </Validator>
-          </TextBox>
+            value={user?.email}
+          />
         </div>
 
         <div className='w-full p-2'>
@@ -61,11 +74,8 @@ const App = ({}) => {
             label='Password *'
             mode='password'
             onValueChanged={(e) => handleChange(e)("password")}
-          >
-            <Validator>
-              <RequiredRule message='Password is required' />
-            </Validator>
-          </TextBox>
+            value={user?.password}
+          />
         </div>
 
         <div className='w-full h-[100%] flex justify-center items-center'>
@@ -83,7 +93,7 @@ const App = ({}) => {
             className='w-[33%]'
             stylingMode='text'
             text='New Account'
-            onClick={() => console.log("Register")}
+            onClick={() => setNewAccount(true)}
           />
 
           <Button
@@ -104,11 +114,8 @@ const App = ({}) => {
           <TextBox
             label='Email'
             onValueChanged={(e) => handleChange(e)("email")}
-          >
-            <Validator>
-              <RequiredRule message='Email is required' />
-            </Validator>
-          </TextBox>
+            value={user?.email}
+          />
         </div>
 
         <div className='w-full h-[100%] flex justify-center items-center'>
@@ -123,6 +130,39 @@ const App = ({}) => {
       </div>
     );
   }, [user]);
+
+  const renderNewAccountContent = useCallback(() => {
+    return (
+      <div className='flex flex-col items-center h-[100%]'>
+        <div className='w-full p-2'>
+          <TextBox
+            label='Email *'
+            onValueChanged={(e) => handleChange(e)("email")}
+            value={user?.email}
+          />
+        </div>
+
+        <div className='w-full p-2'>
+          <TextBox
+            label='Password *'
+            mode='password'
+            onValueChanged={(e) => handleChange(e)("password")}
+            value={user?.password}
+          />
+        </div>
+
+        <div className='w-full h-[100%] flex justify-center items-center'>
+          <Button
+            type='success'
+            stylingMode='contained'
+            className='w-[25%]'
+            text='Register'
+            onClick={handleNewAccount}
+          />
+        </div>
+      </div>
+    );
+  }, []);
 
   return (
     <>
@@ -142,6 +182,15 @@ const App = ({}) => {
           visible={forgotPassword}
           contentRender={renderForgotPasswordContent}
           onHiding={() => setForgotPassword(false)}
+        />
+      </div>
+
+      <div>
+        <Popup
+          {...DefaultComponentConfig.Popup}
+          title={"New Account"}
+          visible={newAccount}
+          contentRender={renderNewAccountContent}
         />
       </div>
     </>
