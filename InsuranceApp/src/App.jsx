@@ -47,7 +47,29 @@ const App = ({}) => {
         </div>
 
         <div className='w-full h-[100%] flex justify-center items-center'>
-          <Button className='w-[25%]' text='Login' onClick={handleLogin} />
+          <Button
+            type='normal'
+            stylingMode='contained'
+            className='w-[25%]'
+            text='Login'
+            onClick={handleLogin}
+          />
+        </div>
+
+        <div className='w-full h-[100%] flex justify-between items-center'>
+          <Button
+            className='w-[33%]'
+            stylingMode='outlined'
+            text='Create'
+            onClick={() => console.log("Register")}
+          />
+
+          <Button
+            className='w-[33%]'
+            stylingMode='outlined'
+            text='Forgot Password'
+            onClick={() => console.log("Forgot Password")}
+          />
         </div>
       </div>
     );
