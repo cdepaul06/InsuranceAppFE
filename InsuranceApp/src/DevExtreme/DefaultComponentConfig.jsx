@@ -1,3 +1,5 @@
+import { TextBox } from "devextreme-react";
+
 export const DefaultComponentConfig = {
   Popup: {
     width: 500,
@@ -6,4 +8,8 @@ export const DefaultComponentConfig = {
   },
 
   Button: {},
+
+  TextBox: {
+    showClearButton: true,
+  },
 };
