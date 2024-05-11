@@ -2,17 +2,19 @@ import "./App.css";
 import "devextreme/dist/css/dx.dark.css";
 import { Popup, TextBox, Button } from "devextreme-react";
 import { DefaultComponentConfig } from "./DevExtreme/DefaultComponentConfig";
-import Validator, {
-  RequiredRule,
-  CompareRule,
-} from "devextreme-react/validator";
+import Validator, { RequiredRule } from "devextreme-react/validator";
 import { useCallback, useState } from "react";
 import { apiCall } from "./API";
+import { useNavigate } from "react-router-dom";
+import { UserTypes } from "./Constants/UserTypes/UserTypes";
 
 const App = ({}) => {
   const [user, setUser] = useState({});
-  const [forgotPassword, setForgotPassword] = useState(false);
-  const [newAccount, setNewAccount] = useState(false);
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
+
+  // ! debug
+  navigate("/admin");
 
   const handleChange = useCallback(
     ({ value }) =>
@@ -24,19 +26,25 @@ const App = ({}) => {
 
   const handleLogin = useCallback(
     (e) => {
-      console.log("### e", e);
-      let result = e.validationGroup.validate();
-      if (result.isValid) {
-        apiCall("POST", "auth/login", "", user)
-          .then((res) => {
-            if (res) {
-              console.log(res);
+      apiCall("POST", "auth/login", e.validationGroup, "", user)
+        .then((res) => {
+          if (res) {
+            console.log(res);
+
+            if (res.userTypeId === UserTypes.ADMIN) {
+              navigate("/admin");
             }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+
+            if (res.userTypeId === UserTypes.USER) {
+              navigate("/user");
+            }
+
+            setOpen(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     [user]
   );
@@ -91,12 +99,8 @@ const App = ({}) => {
         <Popup
           {...DefaultComponentConfig.Popup}
           title={"Login"}
-          visible={true}
+          visible={open}
           contentRender={renderContent}
-          onHiding={() => {
-            setForgotPassword(false);
-            setUser({});
-          }}
         />
       </div>
     </>

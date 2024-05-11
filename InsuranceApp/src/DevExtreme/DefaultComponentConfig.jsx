@@ -17,4 +17,6 @@ export const DefaultComponentConfig = {
     valueChangeEvent: "focusout",
     height: 100,
   },
+
+  Accordion: {},
 };

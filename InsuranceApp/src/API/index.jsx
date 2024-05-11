@@ -5,6 +5,7 @@ import axios from "axios";
  *
  * @param {string} method - The HTTP method to use (GET, POST, PUT, DELETE, etc.)
  * @param {string} endpoint - The API endpoint URL.
+ * @param {Object} validationGroup - The validation group to be used for the request.
  * @param {Object} queryParams - Optional query parameters to be included in the request.
  * @param {Object} body - Optional data to be sent with the request (for POST, PUT).
  * @param {Object} headers - Optional headers to be included in the request.
@@ -13,6 +14,7 @@ import axios from "axios";
 export const apiCall = async (
   method,
   endpoint,
+  validationGroup,
   queryParams = "",
   body = {},
   headers = {},
@@ -30,8 +32,12 @@ export const apiCall = async (
   };
 
   try {
-    const response = await axios(config);
-    return response.data;
+    let validation = validationGroup.validate();
+
+    if (validation.isValid) {
+      const response = await axios(config);
+      return response.data;
+    }
   } catch (error) {
     console.error("API call failed:", error);
     throw error;
