@@ -1,10 +1,14 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Accordion, Button } from "devextreme-react";
+import { Accordion, Button, Popup } from "devextreme-react";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 import { AdminNavigation } from "../../Constants/NavigationLinks/NavigationLinks";
+import GenericPopup from "../GenericPopup/GenericPopup";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = ({ layout }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [action, setAction] = useState({ action: "", entityName: "" });
+  const navigate = useNavigate();
 
   const navLinks = useMemo(() => {
     switch (layout) {
@@ -17,17 +21,31 @@ const Navigation = ({ layout }) => {
     }
   }, [layout]);
 
-  const handleActionClick = (action) => {
-    console.log(action);
+  const handleActionClick = useCallback((action) => {
+    if (action.isPopup) {
+      setOpen(true);
+      setAction(action);
+    } else {
+      renderGridView(action.entityName);
+    }
+  }, []);
 
-    action.isPopup && setOpen(true);
+  const renderGridView = useCallback((entityName) => {
+    navigate(`/admin/${entityName}`);
+  }, []);
 
-    action.isPopup ? renderPopup(action.entityName, action.action, open) : "";
-  };
+  const renderActionPopup = useCallback(() => {
+    return (
+      <GenericPopup
+        action={action?.action}
+        entityName={action?.entityName}
+        open={open}
+        setOpen={setOpen}
+      />
+    );
+  }, [JSON.stringify(action), open]);
 
-  const renderPopup = (entityName, action, open) => {};
-
-  const renderItem = (data) => {
+  const renderItem = useCallback((data) => {
     return (
       <div>
         <div className='flex flex-col space-y-2 mt-2'>
@@ -45,7 +63,7 @@ const Navigation = ({ layout }) => {
         </div>
       </div>
     );
-  };
+  }, []);
 
   const titleRender = useCallback((data) => {
     return (
@@ -56,37 +74,21 @@ const Navigation = ({ layout }) => {
     );
   }, []);
 
-  // this can open the correct popup based off entity name, action
-
-  const renderActionPopup = (component) => {
-    // entity name
-    // action name
-
-    return (
-      <Popup
-        visible={open}
-        onHiding={() => setOpen(false)}
-        dragEnabled={false}
-        closeOnOutsideClick={true}
-        showTitle={true}
-        title={component}
-        width={400}
-        height={400}
-      />
-    );
-  };
-
   return (
-    <div className='flex flex-col w-full'>
-      <Accordion
-        {...DefaultComponentConfig.Accordion}
-        dataSource={navLinks.sort((a, b) => a.title.localeCompare(b.title))}
-        collapsible={true}
-        multiple={true}
-        itemTitleRender={titleRender}
-        itemRender={renderItem}
-      />
-    </div>
+    <>
+      <div className='flex flex-col w-full'>
+        <Accordion
+          {...DefaultComponentConfig.Accordion}
+          dataSource={navLinks.sort((a, b) => a.title.localeCompare(b.title))}
+          collapsible={true}
+          multiple={true}
+          itemTitleRender={titleRender}
+          itemRender={renderItem}
+        />
+      </div>
+
+      {open && renderActionPopup()}
+    </>
   );
 };
 

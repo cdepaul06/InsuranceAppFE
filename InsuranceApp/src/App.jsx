@@ -3,7 +3,7 @@ import "devextreme/dist/css/dx.dark.css";
 import { Popup, TextBox, Button } from "devextreme-react";
 import { DefaultComponentConfig } from "./DevExtreme/DefaultComponentConfig";
 import Validator, { RequiredRule } from "devextreme-react/validator";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiCall } from "./API";
 import { useNavigate } from "react-router-dom";
 import { UserTypes } from "./Constants/UserTypes/UserTypes";
@@ -14,7 +14,9 @@ const App = ({}) => {
   const navigate = useNavigate();
 
   // ! debug
-  navigate("/admin");
+  useEffect(() => {
+    navigate("/admin");
+  }, []);
 
   const handleChange = useCallback(
     ({ value }) =>

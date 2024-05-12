@@ -1,8 +1,14 @@
 const defaultActions = [
-  { action: "View", icon: "find", isPopup: false },
-  { action: "Create", icon: "add", isPopup: true },
-  { action: "Edit", icon: "edit", isPopup: true },
-  { action: "Delete", icon: "close", isPopup: true },
+  {
+    action: "View",
+    icon: "find",
+    isPopup: false,
+    isDefault: true,
+    gridView: ``,
+  },
+  { action: "Create", icon: "add", isPopup: true, isDefault: true },
+  { action: "Edit", icon: "edit", isPopup: true, isDefault: true },
+  { action: "Delete", icon: "close", isPopup: true, isDefault: true },
 ];
 
 export const AdminNavigation = [
