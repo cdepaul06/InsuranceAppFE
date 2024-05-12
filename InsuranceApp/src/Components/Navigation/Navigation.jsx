@@ -1,15 +1,9 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { Accordion, Button, Popup } from "devextreme-react";
+import React, { useCallback, useMemo } from "react";
+import { Accordion, Button } from "devextreme-react";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 import { AdminNavigation } from "../../Constants/NavigationLinks/NavigationLinks";
-import GenericPopup from "../GenericPopup/GenericPopup";
-import { useNavigate } from "react-router-dom";
 
 const Navigation = ({ layout }) => {
-  const [open, setOpen] = useState(false);
-  const [action, setAction] = useState({ action: "", entityName: "" });
-  const navigate = useNavigate();
-
   const navLinks = useMemo(() => {
     switch (layout) {
       case "admin":
@@ -21,30 +15,6 @@ const Navigation = ({ layout }) => {
     }
   }, [layout]);
 
-  const handleActionClick = useCallback((action) => {
-    if (action.isPopup) {
-      setOpen(true);
-      setAction(action);
-    } else {
-      renderGridView(action.entityName);
-    }
-  }, []);
-
-  const renderGridView = useCallback((entityName) => {
-    navigate(`/admin/${entityName}`);
-  }, []);
-
-  const renderActionPopup = useCallback(() => {
-    return (
-      <GenericPopup
-        action={action?.action}
-        entityName={action?.entityName}
-        open={open}
-        setOpen={setOpen}
-      />
-    );
-  }, [JSON.stringify(action), open]);
-
   const renderItem = useCallback((data) => {
     return (
       <div>
@@ -54,10 +24,7 @@ const Navigation = ({ layout }) => {
               key={index}
               text={action.action}
               icon={action.icon}
-              onClick={() => {
-                action.entityName = data.title;
-                handleActionClick(action);
-              }}
+              onClick={() => console.log(action.action)}
             />
           ))}
         </div>
@@ -86,8 +53,6 @@ const Navigation = ({ layout }) => {
           itemRender={renderItem}
         />
       </div>
-
-      {open && renderActionPopup()}
     </>
   );
 };
