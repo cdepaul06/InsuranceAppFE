@@ -1,59 +1,28 @@
-import React, { useCallback, useMemo } from "react";
-import { Accordion, Button } from "devextreme-react";
+import React, { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { entities } from "../../Entities";
+import { Button } from "devextreme-react";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
-import { AdminNavigation } from "../../Constants/NavigationLinks/NavigationLinks";
 
-const Navigation = ({ layout }) => {
-  const navLinks = useMemo(() => {
-    switch (layout) {
-      case "admin":
-        return AdminNavigation;
-      case "user":
-      // return UserNavigation;
-      default:
-        return [];
-    }
-  }, [layout]);
-
-  const renderItem = useCallback((data) => {
-    return (
-      <div>
-        <div className='flex flex-col space-y-2 mt-2'>
-          {data.actions.map((action, index) => (
-            <Button
-              key={index}
-              text={action.action}
-              icon={action.icon}
-              onClick={() => console.log(action.action)}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  }, []);
-
-  const titleRender = useCallback((data) => {
-    return (
-      <div className='flex items-center space-x-2 text-sm'>
-        <span className={`icon-${data.icon}`} />
-        <span className='font-bold'>{data.title.toUpperCase()}</span>
-      </div>
-    );
-  }, []);
+const Navigation = ({ layout, setEntity }) => {
+  const navigate = useNavigate();
 
   return (
-    <>
-      <div className='flex flex-col w-full'>
-        <Accordion
-          {...DefaultComponentConfig.Accordion}
-          dataSource={navLinks.sort((a, b) => a.title.localeCompare(b.title))}
-          collapsible={true}
-          multiple={true}
-          itemTitleRender={titleRender}
-          itemRender={renderItem}
-        />
-      </div>
-    </>
+    <div className='w-full'>
+      {entities
+        .map((entity) => (
+          <div key={entity.entityName} className='flex flex-col'>
+            <Button
+              {...DefaultComponentConfig.Button}
+              text={entity.buttonLabel}
+              onClick={() => {
+                setEntity(entity.endpoint);
+              }}
+            />
+          </div>
+        ))
+        .sort((a, b) => a.key - b.key)}
+    </div>
   );
 };
 

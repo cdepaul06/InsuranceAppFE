@@ -14,9 +14,9 @@ const App = ({}) => {
   const navigate = useNavigate();
 
   // ! debug
-  useEffect(() => {
-    navigate("/admin");
-  }, []);
+  // useEffect(() => {
+  //   navigate("/admin");
+  // }, []);
 
   const handleChange = useCallback(
     ({ value }) =>
@@ -31,8 +31,6 @@ const App = ({}) => {
       apiCall("POST", "auth/login", e.validationGroup, "", user)
         .then((res) => {
           if (res) {
-            console.log(res);
-
             if (res.userTypeId === UserTypes.ADMIN) {
               navigate("/admin");
             }
@@ -40,7 +38,6 @@ const App = ({}) => {
             if (res.userTypeId === UserTypes.USER) {
               navigate("/user");
             }
-
             setOpen(false);
           }
         })
