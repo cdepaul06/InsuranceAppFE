@@ -5,11 +5,9 @@ import { apiCall } from "../../API";
 
 const Grid = ({ entity, columns, queryParams }) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
-    setLoading(true);
     setError(null);
     try {
       const fetchedData = await apiCall("GET", `${entity}`, null, queryParams);
@@ -17,14 +15,12 @@ const Grid = ({ entity, columns, queryParams }) => {
     } catch (err) {
       setError(`Error fetching data for ${entity}`);
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [entity, queryParams]); // Refetch when entity or queryParams change
+  }, [entity, queryParams]);
 
   return (
     <div>
