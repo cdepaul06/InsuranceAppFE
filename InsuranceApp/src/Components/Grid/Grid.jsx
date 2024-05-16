@@ -173,7 +173,7 @@ const Grid = ({ entity, queryParams }) => {
         dataField: "userStatusId",
         caption: "User Status",
         dataType: "number",
-        calculateCellValue: ({ userStatusId }) => {
+        calculateDisplayValue: ({ userStatusId }) => {
           return userStatusId === 1 ? "Active" : "Inactive";
         },
       },
@@ -182,7 +182,7 @@ const Grid = ({ entity, queryParams }) => {
         dataField: "userTypeId",
         caption: "User Type",
         dataType: "number",
-        calculateCellValue: ({ userTypeId }) => {
+        calculateDisplayValue: ({ userTypeId }) => {
           return userTypeId === 1 ? "Admin" : "User";
         },
       },
