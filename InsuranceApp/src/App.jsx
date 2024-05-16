@@ -6,7 +6,7 @@ import Validator, { RequiredRule } from "devextreme-react/validator";
 import { useCallback, useEffect, useState } from "react";
 import { apiCall } from "./API";
 import { useNavigate } from "react-router-dom";
-import { UserTypes } from "./Constants/UserTypes/UserTypes";
+import { UserTypes } from "./Constants/UserTypes";
 
 const App = ({}) => {
   const [user, setUser] = useState({});

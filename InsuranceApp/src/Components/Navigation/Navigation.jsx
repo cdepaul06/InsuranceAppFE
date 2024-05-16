@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { entities } from "../../Entities";
+import { entities } from "../../Constants/Entities";
 import { Button } from "devextreme-react";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 
