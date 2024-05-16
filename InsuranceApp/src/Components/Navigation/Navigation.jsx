@@ -10,8 +10,8 @@ const Navigation = ({ layout, setEntity }) => {
   return (
     <div className='w-full'>
       {entities
-        .map((entity) => (
-          <div key={entity.entityName} className='flex flex-col'>
+        .map((entity, index) => (
+          <div key={index} className='flex flex-col'>
             <Button
               {...DefaultComponentConfig.Button}
               text={entity.buttonLabel}
