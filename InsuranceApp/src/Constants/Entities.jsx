@@ -2,18 +2,22 @@ const defaultActions = [
   {
     actionName: "View",
     actionType: "GET",
+    icon: "find",
   },
   {
     actionName: "Create",
     actionType: "POST",
+    icon: "add",
   },
   {
     actionName: "Edit",
     actionType: "PUT",
+    icon: "edit",
   },
   {
     actionName: "Delete",
     actionType: "DELETE",
+    icon: "trash",
   },
 ];
 

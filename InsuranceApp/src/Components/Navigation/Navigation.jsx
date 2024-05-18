@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { entities } from "../../Constants/Entities";
 import { Button } from "devextreme-react";
@@ -15,6 +15,7 @@ const Navigation = ({ layout, setEntity }) => {
             <Button
               {...DefaultComponentConfig.Button}
               text={entity.buttonLabel}
+              type='normal'
               onClick={() => {
                 setEntity(entity.endpoint);
               }}
