@@ -1,72 +1,162 @@
-const defaultActions = [
-  {
-    actionName: "View",
-    actionType: "GET",
-    icon: "find",
-  },
-  {
-    actionName: "Create",
-    actionType: "POST",
-    icon: "add",
-  },
-  {
-    actionName: "Edit",
-    actionType: "PUT",
-    icon: "edit",
-  },
-  {
-    actionName: "Delete",
-    actionType: "DELETE",
-    icon: "trash",
-  },
-];
-
 export const entities = [
   {
     entityName: "CustomerPolicy",
     buttonLabel: "Customer Policies",
     url: "/customer-policies",
     endpoint: "CustomerPolicies",
-    actions: [...defaultActions],
+    actions: {
+      CREATE: {
+        actionName: "Create",
+        actionType: "POST",
+        icon: "add",
+      },
+      EDIT: {
+        actionName: "Edit",
+        actionType: "PUT",
+        icon: "edit",
+      },
+      DELETE: {
+        actionName: "Delete",
+        actionType: "DELETE",
+        icon: "trash",
+      },
+    },
   },
   {
     entityName: "Customer",
     buttonLabel: "Customers",
     url: "/customers",
     endpoint: "Customers",
-    actions: [...defaultActions],
+    actions: {
+      CREATE: {
+        actionName: "Create",
+        actionType: "POST",
+        icon: "add",
+      },
+      EDIT: {
+        actionName: "Edit",
+        actionType: "PUT",
+        icon: "edit",
+      },
+      DELETE: {
+        actionName: "Delete",
+        actionType: "DELETE",
+        icon: "trash",
+      },
+    },
   },
   {
     entityName: "PolicyStatus",
     buttonLabel: "Policy Statuses",
     url: "/policy-statuses",
     endpoint: "PolicyStatuses",
-    actions: [...defaultActions],
+    actions: {
+      CREATE: {
+        actionName: "Create",
+        actionType: "POST",
+        icon: "add",
+      },
+      EDIT: {
+        actionName: "Edit",
+        actionType: "PUT",
+        icon: "edit",
+        fetchId: "policyStatusId",
+      },
+      DELETE: {
+        actionName: "Delete",
+        actionType: "DELETE",
+        icon: "trash",
+      },
+    },
   },
   {
     entityName: "PolicyType",
     buttonLabel: "Policy Types",
     url: "/policy-types",
     endpoint: "PolicyTypes",
-    actions: [...defaultActions],
+    actions: {
+      CREATE: {
+        actionName: "Create",
+        actionType: "POST",
+        icon: "add",
+      },
+      EDIT: {
+        actionName: "Edit",
+        actionType: "PUT",
+        icon: "edit",
+      },
+      DELETE: {
+        actionName: "Delete",
+        actionType: "DELETE",
+        icon: "trash",
+      },
+    },
   },
   {
     entityName: "User",
     buttonLabel: "Users",
     url: "/users",
     endpoint: "Users",
-    actions: [...defaultActions],
+    actions: {
+      CREATE: {
+        actionName: "Create",
+        actionType: "POST",
+        icon: "add",
+      },
+      EDIT: {
+        actionName: "Edit",
+        actionType: "PUT",
+        icon: "edit",
+      },
+      DELETE: {
+        actionName: "Delete",
+        actionType: "DELETE",
+        icon: "trash",
+      },
+    },
   },
   {
     entityName: "UserStatus",
     buttonLabel: "User Statuses",
     endpoint: "UserStatuses",
-    actions: [...defaultActions],
+    actions: {
+      CREATE: {
+        actionName: "Create",
+        actionType: "POST",
+        icon: "add",
+      },
+      EDIT: {
+        actionName: "Edit",
+        actionType: "PUT",
+        icon: "edit",
+      },
+      DELETE: {
+        actionName: "Delete",
+        actionType: "DELETE",
+        icon: "trash",
+      },
+    },
   },
   {
     entityName: "UserType",
     buttonLabel: "User Types",
     endpoint: "UserTypes",
-    actions: [...defaultActions],
+    actions: {
+      CREATE: {
+        actionName: "Create",
+        actionType: "POST",
+        icon: "add",
+      },
+      EDIT: {
+        actionName: "Edit",
+        actionType: "PUT",
+        icon: "edit",
+      },
+      DELETE: {
+        actionName: "Delete",
+        actionType: "DELETE",
+        icon: "trash",
+      },
+    },
   },
 ];

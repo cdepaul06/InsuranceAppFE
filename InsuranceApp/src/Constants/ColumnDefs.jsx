@@ -157,6 +157,18 @@ export const columnDefs = {
     },
     {
       alignment: "left",
+      dataField: "firstName",
+      caption: "First Name",
+      dataType: "string",
+    },
+    {
+      alignment: "left",
+      dataField: "lastName",
+      caption: "Last Name",
+      dataType: "string",
+    },
+    {
+      alignment: "left",
       dataField: "lastLogin",
       caption: "Last Login",
       dataType: "dateTime",

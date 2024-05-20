@@ -17,15 +17,13 @@ import { Toast } from "devextreme-react";
 import { columnDefs } from "../../Constants/ColumnDefs";
 import { entities } from "../../Constants/Entities";
 import { apiCall } from "../../API";
-import EntityPopup from "../EntityPopup/EntityPopup";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 
 const Grid = ({ entity, queryParams }) => {
   const dataGridRef = useRef(null);
   const [data, setData] = useState([]);
-  const [selectedEntity, setSelectedEntity] = useState({});
+  const [selectedEntity, setSelectedEntity] = useState(null);
   const [selectedAction, setSelectedAction] = useState(null);
-  const [openPopup, setOpenPopup] = useState(false);
   const [toast, setToast] = useState({
     isVisible: false,
     type: "success",
@@ -59,7 +57,7 @@ const Grid = ({ entity, queryParams }) => {
 
   useEffect(() => {
     fetchData();
-    setSelectedEntity({});
+    setSelectedEntity(null);
   }, [entity, queryParams]);
 
   const onToastHiding = useCallback(() => {
@@ -80,11 +78,6 @@ const Grid = ({ entity, queryParams }) => {
 
   const onRowSelected = useCallback(({ selectedRowsData }) => {
     setSelectedEntity(selectedRowsData[0]);
-  }, []);
-
-  const renderEntityPopup = useCallback((action) => {
-    setSelectedAction(action);
-    setOpenPopup(true);
   }, []);
 
   return (
@@ -115,20 +108,23 @@ const Grid = ({ entity, queryParams }) => {
           <Selection mode='single' />
           <Toolbar>
             <Item name='columnChooser' location='before' locateInMenu='auto' />
-            {entities
-              .find((e) => e.endpoint === entity)
-              .actions.map((action, index) => (
-                <Item key={index} location='before'>
-                  <Button
-                    {...DefaultComponentConfig.Button}
-                    stylingMode='contained'
-                    type='default'
-                    icon={action.icon || ""}
-                    text={action.actionName}
-                    onClick={() => renderEntityPopup(action)}
-                  />
-                </Item>
-              ))}
+            {Object.values(
+              entities.find((e) => e.endpoint === entity).actions
+            ).map((action, index) => (
+              <Item key={index} location='before'>
+                <Button
+                  {...DefaultComponentConfig.Button}
+                  disabled={selectedEntity === null}
+                  stylingMode='contained'
+                  type='default'
+                  icon={action.icon || ""}
+                  text={action.actionName}
+                  onClick={() => {
+                    setSelectedAction(action);
+                  }}
+                />
+              </Item>
+            ))}
             <Item name='refresh' locateInMenu='auto'>
               <Button
                 {...DefaultComponentConfig.Button}
@@ -152,20 +148,6 @@ const Grid = ({ entity, queryParams }) => {
           width={300}
           position={positionConfig}
         />
-      </div>
-      <div>
-        {openPopup && (
-          <EntityPopup
-            selectedEntity={selectedEntity}
-            selectedAction={selectedAction}
-            entity={entities.find((e) => e.endpoint === entity)?.buttonLabel}
-            onClose={() => {
-              setOpenPopup(false);
-              setSelectedAction(null);
-              setSelectedEntity({});
-            }}
-          />
-        )}
       </div>
     </div>
   );
