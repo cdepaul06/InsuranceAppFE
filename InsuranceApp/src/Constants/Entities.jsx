@@ -1,3 +1,5 @@
+import UsersList from "../Components/UsersList/UsersList";
+
 export const entities = [
   {
     entityName: "CustomerPolicy",
@@ -5,18 +7,18 @@ export const entities = [
     url: "/customer-policies",
     endpoint: "CustomerPolicies",
     actions: {
-      CREATE: {
-        actionName: "Create",
+      createCustomerPolicy: {
+        actionName: "CreateCustomerPolicy",
         actionType: "POST",
         icon: "add",
       },
-      EDIT: {
-        actionName: "Edit",
+      editCustomerPolicy: {
+        actionName: "EditCustomerPolicy",
         actionType: "PUT",
         icon: "edit",
       },
-      DELETE: {
-        actionName: "Delete",
+      deleteCustomerPolicy: {
+        actionName: "DeleteCustomerPolicy",
         actionType: "DELETE",
         icon: "trash",
       },
@@ -28,18 +30,18 @@ export const entities = [
     url: "/customers",
     endpoint: "Customers",
     actions: {
-      CREATE: {
-        actionName: "Create",
+      createCustomer: {
+        actionName: "CreateCustomer",
         actionType: "POST",
         icon: "add",
       },
-      EDIT: {
-        actionName: "Edit",
+      editCustomer: {
+        actionName: "EditCustomer",
         actionType: "PUT",
         icon: "edit",
       },
-      DELETE: {
-        actionName: "Delete",
+      deleteCustomer: {
+        actionName: "DeleteCustomer",
         actionType: "DELETE",
         icon: "trash",
       },
@@ -97,11 +99,13 @@ export const entities = [
     buttonLabel: "Users",
     url: "/users",
     endpoint: "Users",
+    component: UsersList,
     actions: {
       CREATE: {
         actionName: "Create",
         actionType: "POST",
         icon: "add",
+        function: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -119,6 +123,7 @@ export const entities = [
     entityName: "UserStatus",
     buttonLabel: "User Statuses",
     endpoint: "UserStatuses",
+    url: "/user-statuses",
     actions: {
       CREATE: {
         actionName: "Create",
@@ -141,6 +146,7 @@ export const entities = [
     entityName: "UserType",
     buttonLabel: "User Types",
     endpoint: "UserTypes",
+    url: "/user-types",
     actions: {
       CREATE: {
         actionName: "Create",
