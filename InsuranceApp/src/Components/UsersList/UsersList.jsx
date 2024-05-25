@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
+import { Button } from "devextreme-react";
 import Grid from "../Grid/Grid";
+import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 
 const UsersList = ({}) => {
   const [refetch, setRefetch] = useState(false);
@@ -60,7 +62,6 @@ const UsersList = ({}) => {
 
   const fetchObject = useMemo(() => {
     return {
-      method: "GET",
       endpoint: "Users",
     };
   }, []);

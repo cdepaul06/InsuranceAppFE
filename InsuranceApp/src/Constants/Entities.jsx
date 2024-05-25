@@ -7,17 +7,17 @@ export const entities = [
     url: "/customer-policies",
     endpoint: "CustomerPolicies",
     actions: {
-      createCustomerPolicy: {
+      CREATE: {
         actionName: "CreateCustomerPolicy",
         actionType: "POST",
         icon: "add",
       },
-      editCustomerPolicy: {
+      EDIT: {
         actionName: "EditCustomerPolicy",
         actionType: "PUT",
         icon: "edit",
       },
-      deleteCustomerPolicy: {
+      DELETE: {
         actionName: "DeleteCustomerPolicy",
         actionType: "DELETE",
         icon: "trash",
@@ -30,17 +30,17 @@ export const entities = [
     url: "/customers",
     endpoint: "Customers",
     actions: {
-      createCustomer: {
+      CREATE: {
         actionName: "CreateCustomer",
         actionType: "POST",
         icon: "add",
       },
-      editCustomer: {
+      EDIT: {
         actionName: "EditCustomer",
         actionType: "PUT",
         icon: "edit",
       },
-      deleteCustomer: {
+      DELETE: {
         actionName: "DeleteCustomer",
         actionType: "DELETE",
         icon: "trash",
@@ -105,17 +105,28 @@ export const entities = [
         actionName: "Create",
         actionType: "POST",
         icon: "add",
-        function: () => {},
+        func: () => {
+          console.log("Create User");
+        },
       },
       EDIT: {
         actionName: "Edit",
         actionType: "PUT",
         icon: "edit",
+        min: 1,
+        max: 1,
+        func: () => {
+          console.log("Edit User");
+        },
       },
       DELETE: {
         actionName: "Delete",
         actionType: "DELETE",
         icon: "trash",
+        min: 1,
+        func: () => {
+          console.log("Delete User");
+        },
       },
     },
   },
