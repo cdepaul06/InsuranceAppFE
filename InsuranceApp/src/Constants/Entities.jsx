@@ -5,6 +5,7 @@ import PolicyTypesList from "../Components/PolicyTypesList/PolicyTypesList";
 import UsersList from "../Components/UsersList/UsersList";
 import UserStatusesList from "../Components/UserStatusesList/UserStatusesList";
 import UserTypesList from "../Components/UserTypesList/UserTypesList";
+import UserEditForm from "../Components/UserEditForm/UserEditForm";
 
 export const entities = [
   //#region CustomerPolicy
@@ -189,7 +190,7 @@ export const entities = [
         min: 1,
         max: 1,
         func: (user) => {
-          console.log("Edit User");
+          return UserEditForm;
         },
         onClose: () => {},
       },

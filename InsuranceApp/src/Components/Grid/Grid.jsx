@@ -90,7 +90,9 @@ const Grid = ({
               selectedEntities?.length > action.max
             }
             icon={action.icon}
-            onClick={() => action.func(selectedEntities)}
+            onClick={() => {
+              action.func(selectedEntities);
+            }}
           />
         </Item>
       );
