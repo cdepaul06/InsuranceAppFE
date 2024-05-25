@@ -9,9 +9,11 @@ const AdminLayout = ({}) => {
     return gridRender;
   }, [gridRender]);
 
+  // TODO: Come back and create a render method to display the initial dashboard (user count, policy count, etc.)
+
   return (
     <div className='flex h-screen w-full overflow-auto'>
-      <div className='w-[10%] bg-cyan-800'>
+      <div className='w-[10%] bg-cyan-600'>
         <div className='flex justify-center p-2 overflow-scroll'>
           <Navigation layout={"admin"} setGridRender={setGridRender} />
         </div>

@@ -1,10 +1,14 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Button } from "devextreme-react";
 import Grid from "../Grid/Grid";
-import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 
 const UsersList = ({}) => {
   const [refetch, setRefetch] = useState(false);
+
+  const fetchObject = useMemo(() => {
+    return {
+      endpoint: "Users",
+    };
+  }, []);
 
   const columnDefs = [
     {
@@ -59,12 +63,6 @@ const UsersList = ({}) => {
       }, []),
     },
   ];
-
-  const fetchObject = useMemo(() => {
-    return {
-      endpoint: "Users",
-    };
-  }, []);
 
   return (
     <div>

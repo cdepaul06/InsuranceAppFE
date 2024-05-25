@@ -11,24 +11,32 @@ import DataGrid, {
   Selection,
   Toolbar,
   Item,
-  Column,
 } from "devextreme-react/data-grid";
 import { Button } from "devextreme-react/button";
 import { apiCall } from "../../API/index";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 import { entities } from "../../Constants/Entities";
 
+/**
+ * Main Grid component used in the application.
+ * @param {Object} fetchObject - The object containing the fetch method and endpoint.
+ * @param {String} title - The title of the grid.
+ * @param {Array} columns - The columns to display in the grid.
+ * @param {Boolean} refetch - The state to trigger a refetch of the data.
+ * @returns {JSX.Element}
+ */
 const Grid = ({
   fetchObject = { method: "GET" },
   title,
   columns,
   refetch,
+  setRefetch,
   ...props
 }) => {
   const dataGridRef = useRef(null);
   const initialFetch = useRef(false);
   const [gridData, setGridData] = useState([]);
-  const [selectedEntity, setSelectedEntity] = useState([]);
+  const [selectedEntities, setSelectedEntities] = useState([]);
 
   // * Fetch data from the API
   const fetchData = async () => {
@@ -58,7 +66,7 @@ const Grid = ({
   // * Handle when the selection changes
   const handleSelectionChanged = useCallback(() => {
     const selectedRows = dataGridRef.current.instance.getSelectedRowsData();
-    setSelectedEntity(selectedRows);
+    setSelectedEntities(selectedRows);
   }, []);
 
   // * Render actions based on the entity
@@ -78,16 +86,16 @@ const Grid = ({
             {...DefaultComponentConfig.Button}
             text={action.actionName}
             disabled={
-              selectedEntity?.length < action.min ||
-              selectedEntity?.length > action.max
+              selectedEntities?.length < action.min ||
+              selectedEntities?.length > action.max
             }
             icon={action.icon}
-            onClick={action.func}
+            onClick={() => action.func(selectedEntities)}
           />
         </Item>
       );
     });
-  }, [fetchObject, JSON.stringify(selectedEntity)]);
+  }, [fetchObject, JSON.stringify(selectedEntities)]);
 
   return (
     <div>
@@ -107,6 +115,7 @@ const Grid = ({
         allowColumnResizing={true}
         allowColumnHiding={true}
         showRowLines={true}
+        noDataText={`No data available for ${title}`}
         onSelectionChanged={handleSelectionChanged}
         {...props}
       >
