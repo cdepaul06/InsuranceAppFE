@@ -13,6 +13,7 @@ import DataGrid, {
   Item,
 } from "devextreme-react/data-grid";
 import { Button } from "devextreme-react/button";
+import { Toast } from "devextreme-react/toast";
 import { apiCall } from "../../API/index";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 import { entities } from "../../Constants/Entities";
@@ -25,27 +26,27 @@ import { entities } from "../../Constants/Entities";
  * @param {Boolean} refetch - The state to trigger a refetch of the data.
  * @returns {JSX.Element}
  */
-const Grid = ({
-  fetchObject = { method: "GET" },
-  title,
-  columns,
-  refetch,
-  setRefetch,
-  ...props
-}) => {
+const Grid = ({ fetchObject, title, columns, ...props }) => {
   const dataGridRef = useRef(null);
   const initialFetch = useRef(false);
   const [gridData, setGridData] = useState([]);
   const [selectedEntities, setSelectedEntities] = useState([]);
+  const [selectedPopup, setSelectedPopup] = useState(null);
+  const [refetch, setRefetch] = useState(false);
+  const [toastMessage, setToastMessage] = useState({
+    message: "",
+    type: "",
+  });
 
   // * Fetch data from the API
   const fetchData = async () => {
-    try {
-      const data = await apiCall("GET", fetchObject.endpoint);
-      setGridData(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    await apiCall("GET", fetchObject.endpoint)
+      .then((data) => {
+        setGridData(data);
+      })
+      .catch((error) => {
+        console.error("Fetch data failed:", error);
+      });
   };
 
   useEffect(() => {
@@ -61,7 +62,15 @@ const Grid = ({
     if (refetch) {
       fetchData();
     }
+
+    return () => {
+      setRefetch(false);
+    };
   }, [refetch]);
+
+  useEffect(() => {
+    setToastMessage({ message: "", type: "" });
+  }, [title]);
 
   // * Handle when the selection changes
   const handleSelectionChanged = useCallback(() => {
@@ -91,13 +100,25 @@ const Grid = ({
             }
             icon={action.icon}
             onClick={() => {
-              action.func(selectedEntities);
+              const { component, props } = action.func(
+                selectedEntities,
+                setSelectedPopup,
+                setRefetch,
+                setToastMessage
+              );
+              if (component) {
+                setSelectedPopup({ component, props });
+              } else {
+                setSelectedPopup(null);
+              }
             }}
           />
         </Item>
       );
     });
-  }, [fetchObject, JSON.stringify(selectedEntities)]);
+  }, [fetchObject, selectedEntities]);
+
+  console.log("toastMessage", toastMessage);
 
   return (
     <div>
@@ -109,7 +130,6 @@ const Grid = ({
         key={title}
         columns={columns}
         dataSource={gridData}
-        remoteOperations={"auto"}
         showBorders={true}
         rowAlternationEnabled={true}
         columnAutoWidth={true}
@@ -131,12 +151,31 @@ const Grid = ({
               {...DefaultComponentConfig.Button}
               icon='refresh'
               onClick={() => {
+                dataGridRef.current.instance.clearSelection();
+                dataGridRef.current.instance.state({
+                  filterValue: [],
+                  sort: [],
+                });
                 fetchData();
               }}
             />
           </Item>
         </Toolbar>
+        {selectedPopup && (
+          <div>
+            {React.createElement(selectedPopup.component, selectedPopup.props)}
+          </div>
+        )}
       </DataGrid>
+
+      <Toast
+        visible={!!toastMessage?.message}
+        width={300}
+        message={toastMessage?.message}
+        duration={3000}
+        type={toastMessage?.type}
+        onHiding={() => setToastMessage({ message: "", type: "" })}
+      />
     </div>
   );
 };

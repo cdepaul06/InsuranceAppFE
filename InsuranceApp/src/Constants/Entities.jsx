@@ -189,9 +189,10 @@ export const entities = [
         icon: "edit",
         min: 1,
         max: 1,
-        func: (user) => {
-          return UserEditForm;
-        },
+        func: (user, resetPopup, setRefetch, setToastMessage) => ({
+          component: UserEditForm,
+          props: { user, resetPopup, setRefetch, setToastMessage },
+        }),
         onClose: () => {},
       },
       DELETE: {

@@ -13,11 +13,6 @@ const App = ({}) => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
 
-  // ! debug
-  // useEffect(() => {
-  //   navigate("/admin");
-  // }, []);
-
   const handleChange = useCallback(
     ({ value }) =>
       (field) => {

@@ -15,6 +15,10 @@ export const DefaultComponentConfig = {
     showClearButton: true,
     valueChangeEvent: "focusout",
     inputAttr: { autocomplete: "new-password" },
+    labelMode: "outside",
+    showClearButton: true,
+    validationMessageMode: "always",
+    validationMessagePosition: "bottom",
   },
 
   TextArea: {

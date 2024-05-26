@@ -2,8 +2,6 @@ import React, { useCallback, useMemo, useState } from "react";
 import Grid from "../Grid/Grid";
 
 const UsersList = ({}) => {
-  const [refetch, setRefetch] = useState(false);
-
   const fetchObject = useMemo(() => {
     return {
       endpoint: "Users",
@@ -66,13 +64,7 @@ const UsersList = ({}) => {
 
   return (
     <div>
-      <Grid
-        fetchObject={fetchObject}
-        title='Users'
-        columns={columnDefs}
-        refetch={refetch}
-        setRefetch={setRefetch}
-      />
+      <Grid fetchObject={fetchObject} title='Users' columns={columnDefs} />
     </div>
   );
 };

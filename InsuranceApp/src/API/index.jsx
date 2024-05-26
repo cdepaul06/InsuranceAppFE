@@ -3,7 +3,7 @@ import axios from "axios";
 export const apiCall = async (
   method,
   endpoint,
-  validationGroup = null, // default to null if not provided
+  validationGroup = null,
   queryParams = "",
   body = {},
   headers = {},
