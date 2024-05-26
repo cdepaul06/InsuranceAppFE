@@ -35,4 +35,10 @@ export const DefaultComponentConfig = {
       hide: { type: "fade", from: 1, to: 0, duration: 1500 },
     },
   },
+
+  SelectBox: {
+    searchEnabled: true,
+    showClearButton: true,
+    labelMode: "outside",
+  },
 };

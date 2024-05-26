@@ -118,6 +118,8 @@ const Grid = ({ fetchObject, title, columns, ...props }) => {
     });
   }, [fetchObject, selectedEntities]);
 
+  console.log("toastMessage", toastMessage);
+
   return (
     <div>
       <div className='p-3'>

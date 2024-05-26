@@ -13,24 +13,29 @@ import Validator, {
   CompareRule,
 } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
+import UserTypeSelect from "../../UserTypes/UserTypeSelect/UserTypeSelect";
+import UserStatusSelect from "../../UserStatuses/UserStatusSelect/UserStatusSelect";
 
 const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
-  const [editUser, setEditUser] = useState({});
+  const [newUser, setNewUser] = useState({});
   const [visible, setVisible] = useState(true);
 
   const handleChange = useCallback((field, value) => {
-    setEditUser((prev) => ({ ...prev, [field]: value }));
+    setNewUser((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   const handleSave = useCallback(
     (e) => {
-      apiCall("POST", `users`, e.validationGroup, "", editUser)
+      const saveObject = { ...newUser };
+      saveObject.lastLogin = new Date(Date.now()).toISOString();
+      apiCall("POST", `users`, e.validationGroup, "", saveObject)
         .then(() => {
           setToastMessage({
-            message: `User ${editUser?.email} created successfully`,
+            message: `User ${saveObject?.email} created successfully`,
             type: "success",
           });
           resetPopup(null);
+          setVisible(false);
           setRefetch((prev) => !prev);
         })
         .catch((error) => {
@@ -41,7 +46,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
           console.error("Create user failed:", error);
         });
     },
-    [JSON.stringify(editUser)]
+    [JSON.stringify(newUser), setToastMessage]
   );
 
   const renderContent = useCallback(() => {
@@ -64,7 +69,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
               <TextBox
                 {...DefaultComponentConfig.TextBox}
                 label='Email *'
-                value={editUser?.email}
+                value={newUser?.email}
                 mode='email'
                 onValueChanged={({ value }) => handleChange("email", value)}
               >
@@ -82,7 +87,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
                 {...DefaultComponentConfig.TextBox}
                 label='Password *'
                 mode='password'
-                value={editUser?.password}
+                value={newUser?.password}
                 onKeyDown={() => {
                   handleChange("confirmPassword", null);
                 }}
@@ -102,7 +107,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
                 {...DefaultComponentConfig.TextBox}
                 label='Confirm Password *'
                 mode='password'
-                value={editUser?.confirmPassword}
+                value={newUser?.confirmPassword}
                 onValueChanged={({ value }) =>
                   handleChange("confirmPassword", value)
                 }
@@ -111,7 +116,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
                   <RequiredRule message='Password is required' />
                   <CompareRule
                     message='Passwords do not match'
-                    comparisonTarget={() => editUser?.password}
+                    comparisonTarget={() => newUser?.password}
                   />
                 </Validator>
               </TextBox>
@@ -124,7 +129,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
               <TextBox
                 {...DefaultComponentConfig.TextBox}
                 label='First Name *'
-                value={editUser?.firstName}
+                value={newUser?.firstName}
                 onValueChanged={({ value }) => handleChange("firstName", value)}
               >
                 <Validator>
@@ -140,7 +145,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
               <TextBox
                 {...DefaultComponentConfig.TextBox}
                 label='Last Name *'
-                value={editUser?.lastName}
+                value={newUser?.lastName}
                 onValueChanged={({ value }) => handleChange("lastName", value)}
               >
                 <Validator>
@@ -152,12 +157,24 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
 
           <Item>
             <Location row={3} col={0} colspan={2} />
-            <div className='p-2'>{/* UserTypeSelect goes here */}</div>
+            <div className='p-2'>
+              <UserTypeSelect
+                onValueChanged={({ value }) =>
+                  handleChange("userTypeId", value)
+                }
+              />
+            </div>
           </Item>
 
           <Item>
             <Location row={3} col={2} colspan={2} />
-            <div className='p-2'>{/* UserStatusSelect goes here */}</div>
+            <div className='p-2'>
+              <UserStatusSelect
+                onValueChanged={({ value }) =>
+                  handleChange("userStatusId", value)
+                }
+              />
+            </div>
           </Item>
         </ResponsiveBox>
         <div className='fixed bottom-10 flex flex-row'>
@@ -180,11 +197,11 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
         </div>
       </div>
     );
-  }, [JSON.stringify(editUser)]);
+  }, [JSON.stringify(newUser)]);
 
   const onHiding = useCallback(() => {
     setRefetch((prev) => !prev);
-  }, [resetPopup, setRefetch]);
+  }, [setRefetch]);
 
   return (
     <div>

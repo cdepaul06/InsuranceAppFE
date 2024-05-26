@@ -154,9 +154,9 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (resetPopup, setRefetch, setToastMessage) => ({
+        func: (user, resetPopup, setRefetch, setToastMessage) => ({
           component: UserCreateForm,
-          props: { resetPopup, setRefetch, setToastMessage },
+          props: { user, resetPopup, setRefetch, setToastMessage },
         }),
       },
       EDIT: {
