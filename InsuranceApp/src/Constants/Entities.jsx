@@ -6,6 +6,7 @@ import UsersList from "../Components/Users/UsersList/UsersList";
 import UserStatusesList from "../Components/UserStatuses/UserStatusesList/UserStatusesList";
 import UserTypesList from "../Components/UserTypes/UserTypesList/UserTypesList";
 import UserEditForm from "../Components/Users/UserEditForm/UserEditForm";
+import UserCreateForm from "../Components/Users/UserCreateForm/UserCreateForm";
 
 export const entities = [
   //#region CustomerPolicy
@@ -18,7 +19,6 @@ export const entities = [
     actions: {
       CREATE: {
         actionName: "Create",
-        actionType: "POST",
         icon: "add",
         func: () => {
           console.log("Create Customer Policy");
@@ -26,7 +26,6 @@ export const entities = [
       },
       EDIT: {
         actionName: "Edit",
-        actionType: "PUT",
         icon: "edit",
         min: 1,
         max: 1,
@@ -36,7 +35,6 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
-        actionType: "DELETE",
         icon: "trash",
         min: 1,
         func: (customerPolicy) => {
@@ -56,7 +54,6 @@ export const entities = [
     actions: {
       CREATE: {
         actionName: "Create",
-        actionType: "POST",
         icon: "add",
         func: () => {
           console.log("Create Customer");
@@ -64,7 +61,6 @@ export const entities = [
       },
       EDIT: {
         actionName: "Edit",
-        actionType: "PUT",
         icon: "edit",
         min: 1,
         max: 1,
@@ -74,7 +70,6 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
-        actionType: "DELETE",
         min: 1,
         icon: "trash",
         func: (customer) => {
@@ -94,7 +89,6 @@ export const entities = [
     actions: {
       CREATE: {
         actionName: "Create",
-        actionType: "POST",
         icon: "add",
         func: (policyStatus) => {
           console.log("Create Policy Status");
@@ -102,7 +96,6 @@ export const entities = [
       },
       EDIT: {
         actionName: "Edit",
-        actionType: "PUT",
         icon: "edit",
         func: (policyStatus) => {
           console.log("Edit Policy Status");
@@ -110,7 +103,6 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
-        actionType: "DELETE",
         icon: "trash",
         func: (policyStatus) => {
           console.log("Delete Policy Status");
@@ -129,7 +121,6 @@ export const entities = [
     actions: {
       CREATE: {
         actionName: "Create",
-        actionType: "POST",
         icon: "add",
         func: (policyType) => {
           console.log("Create Policy Type");
@@ -137,7 +128,6 @@ export const entities = [
       },
       EDIT: {
         actionName: "Edit",
-        actionType: "PUT",
         icon: "edit",
         func: (policyType) => {
           console.log("Edit Policy Type");
@@ -145,7 +135,6 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
-        actionType: "DELETE",
         icon: "trash",
         func: (policyType) => {
           console.log("Delete Policy Type");
@@ -164,15 +153,14 @@ export const entities = [
     actions: {
       CREATE: {
         actionName: "Create",
-        actionType: "POST",
         icon: "add",
-        func: () => {
-          console.log("Create User");
-        },
+        func: (resetPopup, setRefetch, setToastMessage) => ({
+          component: UserCreateForm,
+          props: { resetPopup, setRefetch, setToastMessage },
+        }),
       },
       EDIT: {
         actionName: "Edit",
-        actionType: "PUT",
         icon: "edit",
         min: 1,
         max: 1,
@@ -183,7 +171,6 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
-        actionType: "DELETE",
         icon: "trash",
         min: 1,
         func: (user) => {
@@ -203,7 +190,6 @@ export const entities = [
     actions: {
       CREATE: {
         actionName: "Create",
-        actionType: "POST",
         icon: "add",
         func: () => {
           console.log("Create User Status");
@@ -211,7 +197,6 @@ export const entities = [
       },
       EDIT: {
         actionName: "Edit",
-        actionType: "PUT",
         icon: "edit",
         func: (userStatus) => {
           console.log("Edit User Status");
@@ -219,7 +204,6 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
-        actionType: "DELETE",
         icon: "trash",
         func: (userStatus) => {
           console.log("Delete User Status");
@@ -238,7 +222,6 @@ export const entities = [
     actions: {
       CREATE: {
         actionName: "Create",
-        actionType: "POST",
         icon: "add",
         func: () => {
           console.log("Create User Type");
@@ -246,7 +229,6 @@ export const entities = [
       },
       EDIT: {
         actionName: "Edit",
-        actionType: "PUT",
         icon: "edit",
         func: (userType) => {
           console.log("Edit User Type");
@@ -254,7 +236,6 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
-        actionType: "DELETE",
         icon: "trash",
         func: (userType) => {
           console.log("Delete User Type");
