@@ -14,11 +14,9 @@ import Validator, {
 } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
 
-const UserCreateForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
-  const [editUser, setEditUser] = useState({
-    ...user[0],
-    confirmPassword: user[0].password,
-  });
+const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
+  const [editUser, setEditUser] = useState({});
+  const [visible, setVisible] = useState(true);
 
   const handleChange = useCallback((field, value) => {
     setEditUser((prev) => ({ ...prev, [field]: value }));
@@ -168,7 +166,7 @@ const UserCreateForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
               {...DefaultComponentConfig.Button}
               text='Cancel'
               onClick={() => {
-                resetPopup(null);
+                setVisible(false);
               }}
             />
           </div>
@@ -185,7 +183,6 @@ const UserCreateForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
   }, [JSON.stringify(editUser)]);
 
   const onHiding = useCallback(() => {
-    resetPopup(null);
     setRefetch((prev) => !prev);
   }, [resetPopup, setRefetch]);
 
@@ -193,8 +190,8 @@ const UserCreateForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
     <div>
       <Popup
         {...DefaultComponentConfig.Popup}
-        title={`Edit User: ${user[0].email}`}
-        visible={true}
+        title={`Create User`}
+        visible={visible}
         onHiding={onHiding}
         contentRender={renderContent}
         width={600}
