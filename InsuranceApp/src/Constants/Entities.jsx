@@ -1,11 +1,11 @@
-import CustomerPoliciesList from "../Components/CustomerPoliciesList/CustomerPoliciesList";
-import CustomersList from "../Components/CustomersList/CustomersList";
-import PolicyStatusesList from "../Components/PolicyStatusesList/PolicyStatusesList";
-import PolicyTypesList from "../Components/PolicyTypesList/PolicyTypesList";
-import UsersList from "../Components/UsersList/UsersList";
-import UserStatusesList from "../Components/UserStatusesList/UserStatusesList";
-import UserTypesList from "../Components/UserTypesList/UserTypesList";
-import UserEditForm from "../Components/UserEditForm/UserEditForm";
+import CustomerPoliciesList from "../Components/CustomerPolicies/CustomerPoliciesList/CustomerPoliciesList";
+import CustomersList from "../Components/Customers/CustomersList/CustomersList";
+import PolicyStatusesList from "../Components/PolicyStatuses/PolicyStatusesList/PolicyStatusesList";
+import PolicyTypesList from "../Components/PolicyTypes/PolicyTypesList/PolicyTypesList";
+import UsersList from "../Components/Users/UsersList/UsersList";
+import UserStatusesList from "../Components/UserStatuses/UserStatusesList/UserStatusesList";
+import UserTypesList from "../Components/UserTypes/UserTypesList/UserTypesList";
+import UserEditForm from "../Components/Users/UserEditForm/UserEditForm";
 
 export const entities = [
   //#region CustomerPolicy
@@ -23,7 +23,6 @@ export const entities = [
         func: () => {
           console.log("Create Customer Policy");
         },
-        onClose: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -34,7 +33,6 @@ export const entities = [
         func: (customerPolicy) => {
           console.log("Edit Customer Policy");
         },
-        onClose: () => {},
       },
       DELETE: {
         actionName: "Delete",
@@ -44,7 +42,6 @@ export const entities = [
         func: (customerPolicy) => {
           console.log("Delete Customer Policy");
         },
-        onClose: () => {},
       },
     },
   },
@@ -64,7 +61,6 @@ export const entities = [
         func: () => {
           console.log("Create Customer");
         },
-        onClose: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -75,7 +71,6 @@ export const entities = [
         func: (customer) => {
           console.log("Edit Customer");
         },
-        onClose: () => {},
       },
       DELETE: {
         actionName: "Delete",
@@ -85,7 +80,6 @@ export const entities = [
         func: (customer) => {
           console.log("Delete Customer");
         },
-        onClose: () => {},
       },
     },
   },
@@ -105,7 +99,6 @@ export const entities = [
         func: (policyStatus) => {
           console.log("Create Policy Status");
         },
-        onClose: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -114,7 +107,6 @@ export const entities = [
         func: (policyStatus) => {
           console.log("Edit Policy Status");
         },
-        onClose: () => {},
       },
       DELETE: {
         actionName: "Delete",
@@ -123,7 +115,6 @@ export const entities = [
         func: (policyStatus) => {
           console.log("Delete Policy Status");
         },
-        onClose: () => {},
       },
     },
   },
@@ -143,7 +134,6 @@ export const entities = [
         func: (policyType) => {
           console.log("Create Policy Type");
         },
-        onClose: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -152,7 +142,6 @@ export const entities = [
         func: (policyType) => {
           console.log("Edit Policy Type");
         },
-        onClose: () => {},
       },
       DELETE: {
         actionName: "Delete",
@@ -161,7 +150,6 @@ export const entities = [
         func: (policyType) => {
           console.log("Delete Policy Type");
         },
-        onClose: () => {},
       },
     },
   },
@@ -181,7 +169,6 @@ export const entities = [
         func: () => {
           console.log("Create User");
         },
-        onClose: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -193,7 +180,6 @@ export const entities = [
           component: UserEditForm,
           props: { user, resetPopup, setRefetch, setToastMessage },
         }),
-        onClose: () => {},
       },
       DELETE: {
         actionName: "Delete",
@@ -203,7 +189,6 @@ export const entities = [
         func: (user) => {
           console.log("Delete User");
         },
-        onClose: () => {},
       },
     },
   },
@@ -223,7 +208,6 @@ export const entities = [
         func: () => {
           console.log("Create User Status");
         },
-        onClose: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -232,7 +216,6 @@ export const entities = [
         func: (userStatus) => {
           console.log("Edit User Status");
         },
-        onClose: () => {},
       },
       DELETE: {
         actionName: "Delete",
@@ -241,7 +224,6 @@ export const entities = [
         func: (userStatus) => {
           console.log("Delete User Status");
         },
-        onClose: () => {},
       },
     },
   },
@@ -261,7 +243,6 @@ export const entities = [
         func: () => {
           console.log("Create User Type");
         },
-        onClose: () => {},
       },
       EDIT: {
         actionName: "Edit",
@@ -270,7 +251,6 @@ export const entities = [
         func: (userType) => {
           console.log("Edit User Type");
         },
-        onClose: () => {},
       },
       DELETE: {
         actionName: "Delete",
@@ -279,7 +259,6 @@ export const entities = [
         func: (userType) => {
           console.log("Delete User Type");
         },
-        onClose: () => {},
       },
     },
   },

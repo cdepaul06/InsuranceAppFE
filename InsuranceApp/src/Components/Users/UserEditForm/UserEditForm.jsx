@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Popup } from "devextreme-react/popup";
-import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
+import { DefaultComponentConfig } from "../../../DevExtreme/DefaultComponentConfig";
 import ResponsiveBox, {
   Row,
   Col,
@@ -12,7 +12,7 @@ import Validator, {
   RequiredRule,
   CompareRule,
 } from "devextreme-react/validator";
-import { apiCall } from "../../API";
+import { apiCall } from "../../../API";
 
 const UserEditForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
   const [editUser, setEditUser] = useState({

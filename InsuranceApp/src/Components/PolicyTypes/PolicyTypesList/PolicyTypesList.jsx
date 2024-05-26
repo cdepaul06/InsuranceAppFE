@@ -1,31 +1,29 @@
-import React, { useCallback, useMemo, useState } from "react";
-import Grid from "../Grid/Grid";
+import React, { useMemo } from "react";
+import Grid from "../../Grid/Grid";
 
-const UserTypesList = ({}) => {
-  const [refetch, setRefetch] = useState(false);
-
+const PolicyTypesList = ({}) => {
   const fetchObject = useMemo(() => {
     return {
-      endpoint: "UserTypes",
+      endpoint: "Users",
     };
   }, []);
 
   const columnDefs = [
     {
       alignment: "left",
-      dataField: "userTypeId",
+      dataField: "policyTypeId",
       caption: "ID",
       dataType: "number",
     },
     {
       alignment: "left",
-      dataField: "userTypeName",
+      dataField: "policyTypeName",
       caption: "Type",
       dataType: "string",
     },
     {
       alignment: "left",
-      dataField: "userTypeDescription",
+      dataField: "policyTypeDescription",
       caption: "Description",
       dataType: "string",
     },
@@ -35,13 +33,11 @@ const UserTypesList = ({}) => {
     <div>
       <Grid
         fetchObject={fetchObject}
-        title='User Types'
+        title='Policy Types'
         columns={columnDefs}
-        refetch={refetch}
-        setRefetch={setRefetch}
       />
     </div>
   );
 };
 
-export default UserTypesList;
+export default PolicyTypesList;

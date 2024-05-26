@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from "react";
-import Grid from "../Grid/Grid";
+import React, { useCallback, useMemo } from "react";
+import Grid from "../../Grid/Grid";
 
 const UsersList = ({}) => {
   const fetchObject = useMemo(() => {

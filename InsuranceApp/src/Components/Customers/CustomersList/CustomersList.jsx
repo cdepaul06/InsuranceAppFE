@@ -1,9 +1,7 @@
-import React, { useCallback, useMemo, useState } from "react";
-import Grid from "../Grid/Grid";
+import React, { useMemo } from "react";
+import Grid from "../../Grid/Grid";
 
 const CustomersList = ({}) => {
-  const [refetch, setRefetch] = useState(false);
-
   const fetchObject = useMemo(() => {
     return {
       endpoint: "Customers",
@@ -72,8 +70,6 @@ const CustomersList = ({}) => {
       <Grid
         fetchObject={fetchObject}
         title={"Customers"}
-        refetch={refetch}
-        setRefetch={setRefetch}
         columns={columnDefs}
       />
     </div>

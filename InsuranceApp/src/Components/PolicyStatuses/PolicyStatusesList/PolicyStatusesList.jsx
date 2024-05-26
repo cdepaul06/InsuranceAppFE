@@ -1,9 +1,7 @@
-import React, { useMemo, useState } from "react";
-import Grid from "../Grid/Grid";
+import React, { useMemo } from "react";
+import Grid from "../../Grid/Grid";
 
 const PolicyStatusesList = ({}) => {
-  const [refetch, setRefetch] = useState(false);
-
   const fetchObject = useMemo(() => {
     return {
       endpoint: "PolicyStatuses",
@@ -37,8 +35,6 @@ const PolicyStatusesList = ({}) => {
         fetchObject={fetchObject}
         title='Policy Statuses'
         columns={columnDefs}
-        refetch={refetch}
-        setRefetch={setRefetch}
       />
     </div>
   );
