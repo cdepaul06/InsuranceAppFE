@@ -7,7 +7,7 @@ const Navigation = ({ layout, setGridRender }) => {
   const memoEntities = useMemo(() => {
     return entities
       .map((entity, index) => (
-        <div key={index} className='flex flex-col'>
+        <div key={index} className='flex flex-col w-full'>
           <Button
             {...DefaultComponentConfig.Button}
             text={entity.buttonLabel}
