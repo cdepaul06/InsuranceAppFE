@@ -1,6 +1,8 @@
 import CustomerPoliciesList from "../Components/CustomerPolicies/CustomerPoliciesList/CustomerPoliciesList";
 import CustomersList from "../Components/Customers/CustomersList/CustomersList";
 import PolicyStatusesList from "../Components/PolicyStatuses/PolicyStatusesList/PolicyStatusesList";
+import PolicyStatusCreateForm from "../Components/PolicyStatuses/PolicyStatusCreateForm/PolicyStatusCreateForm";
+import PolicyStatusEditForm from "../Components/PolicyStatuses/PolicyStatusEditForm/PolicyStatusEditForm";
 import PolicyTypesList from "../Components/PolicyTypes/PolicyTypesList/PolicyTypesList";
 import UsersList from "../Components/Users/UsersList/UsersList";
 import UserStatusesList from "../Components/UserStatuses/UserStatusesList/UserStatusesList";
@@ -80,7 +82,7 @@ export const entities = [
     },
   },
   //#endregion
-  //#region Policy
+  //#region PolicyStatus
   {
     entityName: "PolicyStatus",
     buttonLabel: "Policy Statuses",
@@ -91,21 +93,23 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (policyStatus) => {
-          console.log("Create Policy Status");
-        },
+        func: (policyStatus, resetPopup, setRefetch, setToastMessage) => ({
+          component: PolicyStatusCreateForm,
+          props: { policyStatus, resetPopup, setRefetch, setToastMessage },
+        }),
       },
       EDIT: {
         actionName: "Edit",
         icon: "edit",
-        func: (policyStatus) => {
-          console.log("Edit Policy Status");
-        },
+        func: (policyStatus, resetPopup, setRefetch, setToastMessage) => ({
+          component: PolicyStatusEditForm,
+          props: { policyStatus, resetPopup, setRefetch, setToastMessage },
+        }),
       },
       DELETE: {
         actionName: "Delete",
         icon: "trash",
-        func: (policyStatus) => {
+        func: (policyStatus, resetPopup, setRefetch, setToastMessages) => {
           console.log("Delete Policy Status");
         },
       },
