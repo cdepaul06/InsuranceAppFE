@@ -57,7 +57,7 @@ const UsersList = ({}) => {
       caption: "User Type",
       dataType: "number",
       calculateDisplayValue: useCallback(({ userTypeId }) => {
-        return userTypeId === 1 ? "Admin" : "User";
+        return userTypeId === 1 ? "Admin" : "Base";
       }, []),
     },
   ];

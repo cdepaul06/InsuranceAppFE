@@ -6,6 +6,13 @@ export const DefaultComponentConfig = {
     showCloseButton: true,
   },
 
+  Confirmation_Popup: {
+    width: 400,
+    height: 300,
+    hideOnOutsideClick: false,
+    showCloseButton: true,
+  },
+
   Button: {
     type: "default",
     stylingMode: "contained",

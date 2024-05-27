@@ -7,6 +7,7 @@ import UserStatusesList from "../Components/UserStatuses/UserStatusesList/UserSt
 import UserTypesList from "../Components/UserTypes/UserTypesList/UserTypesList";
 import UserEditForm from "../Components/Users/UserEditForm/UserEditForm";
 import UserCreateForm from "../Components/Users/UserCreateForm/UserCreateForm";
+import UserDeleteForm from "../Components/Users/UserDeleteForm/UserDeleteForm";
 
 export const entities = [
   //#region CustomerPolicy
@@ -173,9 +174,10 @@ export const entities = [
         actionName: "Delete",
         icon: "trash",
         min: 1,
-        func: (user) => {
-          console.log("Delete User");
-        },
+        func: (users, resetPopup, setRefetch, setToastMessage) => ({
+          component: UserDeleteForm,
+          props: { users, resetPopup, setRefetch, setToastMessage },
+        }),
       },
     },
   },

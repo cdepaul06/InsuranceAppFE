@@ -13,6 +13,8 @@ import Validator, {
   CompareRule,
 } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
+import UserTypeSelect from "../../UserTypes/UserTypeSelect/UserTypeSelect";
+import UserStatusSelect from "../../UserStatuses/UserStatusSelect/UserStatusSelect";
 
 const UserEditForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
   const [editUser, setEditUser] = useState({
@@ -160,12 +162,26 @@ const UserEditForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
 
           <Item>
             <Location row={3} col={0} colspan={2} />
-            <div className='p-2'>{/* UserTypeSelect goes here */}</div>
+            <div className='p-2'>
+              <UserTypeSelect
+                value={editUser?.userTypeId}
+                onValueChanged={({ value }) =>
+                  handleChange("userTypeId", value)
+                }
+              />
+            </div>
           </Item>
 
           <Item>
             <Location row={3} col={2} colspan={2} />
-            <div className='p-2'>{/* UserStatusSelect goes here */}</div>
+            <div className='p-2'>
+              <UserStatusSelect
+                value={editUser?.userStatusId}
+                onValueChanged={({ value }) =>
+                  handleChange("userStatusId", value)
+                }
+              />
+            </div>
           </Item>
         </ResponsiveBox>
         <div className='fixed bottom-10 flex flex-row'>

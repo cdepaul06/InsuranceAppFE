@@ -1,5 +1,16 @@
 import axios from "axios";
 
+/**
+ *
+ * @param {*} method method to be used for the API call
+ * @param {*} endpoint endpoint to be called
+ * @param {*} validationGroup validation group to be used for validation group of components
+ * @param {*} queryParams optional query parameters
+ * @param {*} body body of the API call
+ * @param {*} headers any headers to be passed
+ * @param  {...any} rest holds any other parameters
+ * @returns
+ */
 export const apiCall = async (
   method,
   endpoint,
