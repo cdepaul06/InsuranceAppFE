@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import ConfirmationDialog from "../../ConfirmationDialog/ConfirmationDialog";
 import { apiCall } from "../../../API";
 
@@ -16,7 +16,7 @@ const UserDeleteForm = ({ users, resetPopup, setRefetch, setToastMessage }) => {
       })
       .catch((error) => {
         setToastMessage({
-          message: `Delete user failed: ${error}`,
+          message: `Delete User${users.length > 1 ? "s" : ""} failed: ${error}`,
           type: "error",
         });
         console.error("Delete user failed:", error);

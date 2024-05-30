@@ -3,7 +3,9 @@ import CustomersList from "../Components/Customers/CustomersList/CustomersList";
 import PolicyStatusesList from "../Components/PolicyStatuses/PolicyStatusesList/PolicyStatusesList";
 import PolicyStatusCreateForm from "../Components/PolicyStatuses/PolicyStatusCreateForm/PolicyStatusCreateForm";
 import PolicyStatusEditForm from "../Components/PolicyStatuses/PolicyStatusEditForm/PolicyStatusEditForm";
+import PolicyStatusDeleteForm from "../Components/PolicyStatuses/PolicyStatusDeleteForm/PolicyStatusDeleteForm";
 import PolicyTypesList from "../Components/PolicyTypes/PolicyTypesList/PolicyTypesList";
+import PolicyTypeCreateForm from "../Components/PolicyTypes/PolicyTypeCreateForm/PolicyTypeCreateForm";
 import UsersList from "../Components/Users/UsersList/UsersList";
 import UserStatusesList from "../Components/UserStatuses/UserStatusesList/UserStatusesList";
 import UserTypesList from "../Components/UserTypes/UserTypesList/UserTypesList";
@@ -101,6 +103,8 @@ export const entities = [
       EDIT: {
         actionName: "Edit",
         icon: "edit",
+        min: 1,
+        max: 1,
         func: (policyStatus, resetPopup, setRefetch, setToastMessage) => ({
           component: PolicyStatusEditForm,
           props: { policyStatus, resetPopup, setRefetch, setToastMessage },
@@ -108,9 +112,13 @@ export const entities = [
       },
       DELETE: {
         actionName: "Delete",
+        min: 1,
         icon: "trash",
-        func: (policyStatus, resetPopup, setRefetch, setToastMessages) => {
-          console.log("Delete Policy Status");
+        func: (policyStatuses, resetPopup, setRefetch, setToastMessages) => {
+          return {
+            component: PolicyStatusDeleteForm,
+            props: { policyStatuses, resetPopup, setRefetch, setToastMessages },
+          };
         },
       },
     },
@@ -127,8 +135,11 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (policyType) => {
-          console.log("Create Policy Type");
+        func: (policyType, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: PolicyTypeCreateForm,
+            props: { policyType, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
       EDIT: {

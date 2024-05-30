@@ -201,6 +201,7 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
 
   const onHiding = useCallback(() => {
     setRefetch((prev) => !prev);
+    resetPopup(null);
   }, [setRefetch]);
 
   return (

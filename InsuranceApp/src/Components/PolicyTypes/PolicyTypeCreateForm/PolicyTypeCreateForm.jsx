@@ -11,25 +11,21 @@ import { TextBox, Button } from "devextreme-react/";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
 
-const PolicyStatusCreateForm = ({
-  resetPopup,
-  setRefetch,
-  setToastMessage,
-}) => {
-  const [newPolicyStatus, setNewPolicyStatus] = useState({});
+const PolicyTypeCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
+  const [newPolicyType, setNewPolicyType] = useState({});
   const [visible, setVisible] = useState(true);
 
   const handleChange = useCallback((field, value) => {
-    setNewPolicyStatus((prev) => ({ ...prev, [field]: value }));
+    setNewPolicyType((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   const handleSave = useCallback(
     (e) => {
-      const saveObject = { ...newPolicyStatus };
-      apiCall("POST", `PolicyStatuses`, e.validationGroup, "", saveObject)
+      const saveObject = { ...newPolicyType };
+      apiCall("POST", `PolicyTypes`, e.validationGroup, "", saveObject)
         .then(() => {
           setToastMessage({
-            message: `Policy Status ${saveObject?.policyStatusName} created successfully`,
+            message: `Policy Type ${saveObject?.policyTypeName} created successfully`,
             type: "success",
           });
           resetPopup(null);
@@ -38,13 +34,13 @@ const PolicyStatusCreateForm = ({
         })
         .catch((error) => {
           setToastMessage({
-            message: `Create policy status failed: ${error}`,
+            message: `Create policy type failed: ${error}`,
             type: "error",
           });
-          console.error("Create policy status failed:", error);
+          console.error("Create policy type failed:", error);
         });
     },
-    [JSON.stringify(newPolicyStatus), setToastMessage]
+    [JSON.stringify(newPolicyType), setToastMessage]
   );
 
   const renderContent = useCallback(() => {
@@ -58,38 +54,33 @@ const PolicyStatusCreateForm = ({
           <Item>
             <Location row={0} col={0} colspan={1} />
 
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                label='Status Name'
-                value={newPolicyStatus?.policyStatusName}
-                onValueChanged={({ value }) =>
-                  handleChange("policyStatusName", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Status Name is required' />
-                </Validator>
-              </TextBox>
-            </div>
+            <TextBox
+              {...DefaultComponentConfig.TextBox}
+              label='Policy Type Name'
+              value={newPolicyType?.policyTypeName}
+              onValueChanged={(e) => handleChange("policyTypeName", e.value)}
+            >
+              <Validator>
+                <RequiredRule message='Policy Type Name is required' />
+              </Validator>
+            </TextBox>
           </Item>
 
           <Item>
             <Location row={0} col={1} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                label='Description'
-                value={newPolicyStatus?.policyStatusDescription}
-                onValueChanged={({ value }) =>
-                  handleChange("policyStatusDescription", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Description is required' />
-                </Validator>
-              </TextBox>
-            </div>
+
+            <TextBox
+              {...DefaultComponentConfig.TextBox}
+              label='Policy Type Description'
+              value={newPolicyType?.description}
+              onValueChanged={(e) =>
+                handleChange("policyTypeDescription", e.value)
+              }
+            >
+              <Validator>
+                <RequiredRule message='Policy Type Description is required' />
+              </Validator>
+            </TextBox>
           </Item>
         </ResponsiveBox>
 
@@ -113,7 +104,7 @@ const PolicyStatusCreateForm = ({
         </div>
       </div>
     );
-  }, [JSON.stringify(newPolicyStatus)]);
+  }, [JSON.stringify(newPolicyType)]);
 
   const onHiding = useCallback(() => {
     setRefetch((prev) => !prev);
@@ -124,7 +115,7 @@ const PolicyStatusCreateForm = ({
     <div>
       <Popup
         {...DefaultComponentConfig.Popup}
-        title={`Create Policy Status`}
+        title={`Create Policy Type`}
         visible={visible}
         onHiding={onHiding}
         contentRender={renderContent}
@@ -133,4 +124,4 @@ const PolicyStatusCreateForm = ({
   );
 };
 
-export default PolicyStatusCreateForm;
+export default PolicyTypeCreateForm;

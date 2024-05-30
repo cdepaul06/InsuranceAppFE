@@ -4,7 +4,7 @@ import Grid from "../../Grid/Grid";
 const PolicyTypesList = ({}) => {
   const fetchObject = useMemo(() => {
     return {
-      endpoint: "Users",
+      endpoint: "PolicyTypes",
     };
   }, []);
 
