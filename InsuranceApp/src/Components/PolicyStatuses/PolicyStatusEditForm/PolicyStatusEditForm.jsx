@@ -66,8 +66,8 @@ const PolicyStatusEditForm = ({
                 {...DefaultComponentConfig.TextBox}
                 label='Policy Status Name *'
                 value={editPolicyStatus?.policyStatusName}
-                onValueChanged={(e) =>
-                  handleChange("policyStatusName", e.value)
+                onValueChanged={({ value }) =>
+                  handleChange("policyStatusName", value)
                 }
                 placeholder='Policy Status Name'
               >
@@ -86,8 +86,8 @@ const PolicyStatusEditForm = ({
                 {...DefaultComponentConfig.TextBox}
                 label='Policy Status Description *'
                 value={editPolicyStatus?.policyStatusDescription}
-                onValueChanged={(e) =>
-                  handleChange("policyStatusDescription", e.value)
+                onValueChanged={({ value }) =>
+                  handleChange("policyStatusDescription", value)
                 }
                 placeholder='Policy Status Description'
               >
@@ -104,6 +104,8 @@ const PolicyStatusEditForm = ({
             <Button
               {...DefaultComponentConfig.Button}
               text='Cancel'
+              stylingMode='outlined'
+              type='danger'
               onClick={() => {
                 resetPopup(null);
               }}
@@ -113,6 +115,8 @@ const PolicyStatusEditForm = ({
             <Button
               {...DefaultComponentConfig.Button}
               text='Save'
+              stylingMode='outlined'
+              type='success'
               onClick={handleSave}
             />
           </div>
@@ -130,7 +134,7 @@ const PolicyStatusEditForm = ({
     <div>
       <Popup
         {...DefaultComponentConfig.Popup}
-        title={`Edit Policy Status: ${editPolicyStatus[0]?.policyStatusName}`}
+        title={`Edit Policy Status: ${editPolicyStatus?.policyStatusName}`}
         visible={true}
         onHiding={onHiding}
         contentRender={renderContent}

@@ -2,21 +2,21 @@ import React, { useCallback } from "react";
 import ConfirmationDialog from "../../ConfirmationDialog/ConfirmationDialog";
 import { apiCall } from "../../../API";
 
-const PolicyStatusDeleteForm = ({
-  policyStatuses,
+const PolicyTypeDeleteForm = ({
+  policyTypes,
   resetPopup,
   setRefetch,
   setToastMessage,
 }) => {
   const handleDelete = useCallback(() => {
-    const policyStatusIds = policyStatuses.map(
-      (policyStatus) => policyStatus.policyStatusId
+    const policyTypeIds = policyTypes.map(
+      (policyType) => policyType.policyTypeId
     );
-    apiCall("DELETE", "PolicyStatuses", null, "", policyStatusIds)
+    apiCall("DELETE", "PolicyTypes", null, "", policyTypeIds)
       .then(() => {
         setToastMessage({
-          message: `Policy Status${
-            policyStatuses.length > 1 ? "es" : ""
+          message: `Policy Type${
+            policyTypes.length > 1 ? "s" : ""
           } deleted successfully`,
           type: "success",
         });
@@ -25,24 +25,24 @@ const PolicyStatusDeleteForm = ({
       })
       .catch((error) => {
         setToastMessage({
-          message: `Delete Policy Status${
-            policyStatuses.length > 1 ? "es" : ""
+          message: `Delete Policy Type${
+            policyTypes.length > 1 ? "s" : ""
           } failed: ${error}`,
           type: "error",
         });
-        console.error("Delete policy status failed:", error);
+        console.error("Delete policy type failed:", error);
       });
-  }, [JSON.stringify(policyStatuses)]);
+  }, [JSON.stringify(policyTypes)]);
 
   return (
     <div>
       <ConfirmationDialog
-        endpoint={"PolicyStatuses"}
+        endpoint={"PolicyTypes"}
         apiCall={handleDelete}
         message={`Are you sure you want to delete ${
-          policyStatuses.length > 1
-            ? `these ${policyStatuses.length} policy statuses`
-            : "this policy status"
+          policyTypes.length > 1
+            ? `these ${policyTypes.length} policy types`
+            : "this policy type"
         }?`}
         onClose={() => {
           resetPopup(null);
@@ -53,4 +53,4 @@ const PolicyStatusDeleteForm = ({
   );
 };
 
-export default PolicyStatusDeleteForm;
+export default PolicyTypeDeleteForm;

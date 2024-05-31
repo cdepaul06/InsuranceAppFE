@@ -189,8 +189,11 @@ const UserEditForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
             <Button
               {...DefaultComponentConfig.Button}
               text='Cancel'
+              stylingMode='outlined'
+              type='danger'
               onClick={() => {
                 resetPopup(null);
+                setRefetch((prev) => !prev);
               }}
             />
           </div>
@@ -198,6 +201,8 @@ const UserEditForm = ({ user, resetPopup, setRefetch, setToastMessage }) => {
             <Button
               {...DefaultComponentConfig.Button}
               text='Save'
+              stylingMode='outlined'
+              type='success'
               onClick={handleSave}
             />
           </div>

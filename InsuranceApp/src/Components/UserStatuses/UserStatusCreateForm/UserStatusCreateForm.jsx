@@ -11,25 +11,21 @@ import { TextBox, Button } from "devextreme-react/";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
 
-const PolicyStatusCreateForm = ({
-  resetPopup,
-  setRefetch,
-  setToastMessage,
-}) => {
-  const [newPolicyStatus, setNewPolicyStatus] = useState({});
+const UserStatusCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
+  const [newUserStatus, setNewUserStatus] = useState({});
   const [visible, setVisible] = useState(true);
 
   const handleChange = useCallback((field, value) => {
-    setNewPolicyStatus((prev) => ({ ...prev, [field]: value }));
+    setNewUserStatus((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   const handleSave = useCallback(
     (e) => {
-      const saveObject = { ...newPolicyStatus };
-      apiCall("POST", `PolicyStatuses`, e.validationGroup, "", saveObject)
+      const saveObject = { ...newUserStatus };
+      apiCall("POST", `UserStatuses`, e.validationGroup, "", saveObject)
         .then(() => {
           setToastMessage({
-            message: `Policy Status ${saveObject?.policyStatusName} created successfully`,
+            message: `User Status ${saveObject?.userStatusName} created successfully`,
             type: "success",
           });
           resetPopup(null);
@@ -38,13 +34,13 @@ const PolicyStatusCreateForm = ({
         })
         .catch((error) => {
           setToastMessage({
-            message: `Create policy status failed: ${error}`,
+            message: `Create user status failed: ${error}`,
             type: "error",
           });
-          console.error("Create policy status failed:", error);
+          console.error("Create user status failed:", error);
         });
     },
-    [JSON.stringify(newPolicyStatus), setToastMessage]
+    [JSON.stringify(newUserStatus), setToastMessage]
   );
 
   const renderContent = useCallback(() => {
@@ -61,14 +57,14 @@ const PolicyStatusCreateForm = ({
             <div className='p-2'>
               <TextBox
                 {...DefaultComponentConfig.TextBox}
-                label='Status Name'
-                value={newPolicyStatus?.policyStatusName}
+                label='User Status Name'
+                value={newUserStatus?.userStatusName}
                 onValueChanged={({ value }) =>
-                  handleChange("policyStatusName", value)
+                  handleChange("userStatusName", value)
                 }
               >
                 <Validator>
-                  <RequiredRule message='Status Name is required' />
+                  <RequiredRule message='User status Name is required' />
                 </Validator>
               </TextBox>
             </div>
@@ -76,17 +72,18 @@ const PolicyStatusCreateForm = ({
 
           <Item>
             <Location row={0} col={1} colspan={1} />
+
             <div className='p-2'>
               <TextBox
                 {...DefaultComponentConfig.TextBox}
-                label='Description'
-                value={newPolicyStatus?.policyStatusDescription}
+                label='User Status Description'
+                value={newUserStatus?.userStatusDescription}
                 onValueChanged={({ value }) =>
-                  handleChange("policyStatusDescription", value)
+                  handleChange("userStatusDescription", value)
                 }
               >
                 <Validator>
-                  <RequiredRule message='Description is required' />
+                  <RequiredRule message='User status description is required' />
                 </Validator>
               </TextBox>
             </div>
@@ -110,16 +107,16 @@ const PolicyStatusCreateForm = ({
           <div className='p-2'>
             <Button
               {...DefaultComponentConfig.Button}
+              text='Save'
               stylingMode='outlined'
               type='success'
-              text='Save'
               onClick={handleSave}
             />
           </div>
         </div>
       </div>
     );
-  }, [JSON.stringify(newPolicyStatus)]);
+  }, [JSON.stringify(newUserStatus)]);
 
   const onHiding = useCallback(() => {
     setRefetch((prev) => !prev);
@@ -130,7 +127,7 @@ const PolicyStatusCreateForm = ({
     <div>
       <Popup
         {...DefaultComponentConfig.Popup}
-        title={`Create Policy Status`}
+        title={`Create User Status`}
         visible={visible}
         onHiding={onHiding}
         contentRender={renderContent}
@@ -139,4 +136,4 @@ const PolicyStatusCreateForm = ({
   );
 };
 
-export default PolicyStatusCreateForm;
+export default UserStatusCreateForm;

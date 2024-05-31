@@ -54,33 +54,39 @@ const PolicyTypeCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
           <Item>
             <Location row={0} col={0} colspan={1} />
 
-            <TextBox
-              {...DefaultComponentConfig.TextBox}
-              label='Policy Type Name'
-              value={newPolicyType?.policyTypeName}
-              onValueChanged={(e) => handleChange("policyTypeName", e.value)}
-            >
-              <Validator>
-                <RequiredRule message='Policy Type Name is required' />
-              </Validator>
-            </TextBox>
+            <div className='p-2'>
+              <TextBox
+                {...DefaultComponentConfig.TextBox}
+                label='Policy Type Name'
+                value={newPolicyType?.policyTypeName}
+                onValueChanged={({ value }) =>
+                  handleChange("policyTypeName", value)
+                }
+              >
+                <Validator>
+                  <RequiredRule message='Policy Type Name is required' />
+                </Validator>
+              </TextBox>
+            </div>
           </Item>
 
           <Item>
             <Location row={0} col={1} colspan={1} />
 
-            <TextBox
-              {...DefaultComponentConfig.TextBox}
-              label='Policy Type Description'
-              value={newPolicyType?.description}
-              onValueChanged={(e) =>
-                handleChange("policyTypeDescription", e.value)
-              }
-            >
-              <Validator>
-                <RequiredRule message='Policy Type Description is required' />
-              </Validator>
-            </TextBox>
+            <div className='p-2'>
+              <TextBox
+                {...DefaultComponentConfig.TextBox}
+                label='Policy Type Description'
+                value={newPolicyType?.policyTypeDescription}
+                onValueChanged={({ value }) =>
+                  handleChange("policyTypeDescription", value)
+                }
+              >
+                <Validator>
+                  <RequiredRule message='Policy Type Description is required' />
+                </Validator>
+              </TextBox>
+            </div>
           </Item>
         </ResponsiveBox>
 
@@ -89,7 +95,11 @@ const PolicyTypeCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
             <Button
               {...DefaultComponentConfig.Button}
               text='Cancel'
+              stylingMode='outlined'
+              type='danger'
               onClick={() => {
+                setRefetch((prev) => !prev);
+                resetPopup(null);
                 setVisible(false);
               }}
             />
@@ -98,6 +108,8 @@ const PolicyTypeCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
             <Button
               {...DefaultComponentConfig.Button}
               text='Save'
+              stylingMode='outlined'
+              type='success'
               onClick={handleSave}
             />
           </div>

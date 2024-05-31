@@ -182,8 +182,12 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
             <Button
               {...DefaultComponentConfig.Button}
               text='Cancel'
+              stylingMode='outlined'
+              type='danger'
               onClick={() => {
+                resetPopup(null);
                 setVisible(false);
+                setRefetch((prev) => !prev);
               }}
             />
           </div>
@@ -191,6 +195,8 @@ const UserCreateForm = ({ resetPopup, setRefetch, setToastMessage }) => {
             <Button
               {...DefaultComponentConfig.Button}
               text='Save'
+              stylingMode='outlined'
+              type='success'
               onClick={handleSave}
             />
           </div>

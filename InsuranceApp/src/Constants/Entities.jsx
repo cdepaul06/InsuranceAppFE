@@ -6,8 +6,13 @@ import PolicyStatusEditForm from "../Components/PolicyStatuses/PolicyStatusEditF
 import PolicyStatusDeleteForm from "../Components/PolicyStatuses/PolicyStatusDeleteForm/PolicyStatusDeleteForm";
 import PolicyTypesList from "../Components/PolicyTypes/PolicyTypesList/PolicyTypesList";
 import PolicyTypeCreateForm from "../Components/PolicyTypes/PolicyTypeCreateForm/PolicyTypeCreateForm";
+import PolicyTypeEditForm from "../Components/PolicyTypes/PolicyTypeEditForm/PolicyTypeEditForm";
+import PolicyTypeDeleteForm from "../Components/PolicyTypes/PolicyTypeDeleteForm/PolicyTypeDeleteForm";
 import UsersList from "../Components/Users/UsersList/UsersList";
 import UserStatusesList from "../Components/UserStatuses/UserStatusesList/UserStatusesList";
+import UserStatusCreateForm from "../Components/UserStatuses/UserStatusCreateForm/UserStatusCreateForm";
+import UserStatusEditForm from "../Components/UserStatuses/UserStatusEditForm/UserStatusEditForm";
+import UserStatusDeleteForm from "../Components/UserStatuses/UserStatusDeleteForm/UserStatusDeleteForm";
 import UserTypesList from "../Components/UserTypes/UserTypesList/UserTypesList";
 import UserEditForm from "../Components/Users/UserEditForm/UserEditForm";
 import UserCreateForm from "../Components/Users/UserCreateForm/UserCreateForm";
@@ -145,15 +150,24 @@ export const entities = [
       EDIT: {
         actionName: "Edit",
         icon: "edit",
-        func: (policyType) => {
-          console.log("Edit Policy Type");
+        min: 1,
+        max: 1,
+        func: (policyType, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: PolicyTypeEditForm,
+            props: { policyType, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
       DELETE: {
         actionName: "Delete",
         icon: "trash",
-        func: (policyType) => {
-          console.log("Delete Policy Type");
+        min: 1,
+        func: (policyTypes, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: PolicyTypeDeleteForm,
+            props: { policyTypes, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
     },
@@ -208,22 +222,34 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: () => {
-          console.log("Create User Status");
+        func: (userStatus, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: UserStatusCreateForm,
+            props: { userStatus, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
       EDIT: {
         actionName: "Edit",
         icon: "edit",
-        func: (userStatus) => {
-          console.log("Edit User Status");
+        min: 1,
+        max: 1,
+        func: (userStatus, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: UserStatusEditForm,
+            props: { userStatus, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
       DELETE: {
         actionName: "Delete",
         icon: "trash",
-        func: (userStatus) => {
-          console.log("Delete User Status");
+        min: 1,
+        func: (userStatuses, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: UserStatusDeleteForm,
+            props: { userStatuses, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
     },

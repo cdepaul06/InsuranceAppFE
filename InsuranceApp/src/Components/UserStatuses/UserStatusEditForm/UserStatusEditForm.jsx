@@ -11,40 +11,44 @@ import { TextBox, Button } from "devextreme-react/";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
 
-const PolicyStatusCreateForm = ({
+const UserStatusEditForm = ({
+  userStatus,
   resetPopup,
   setRefetch,
   setToastMessage,
 }) => {
-  const [newPolicyStatus, setNewPolicyStatus] = useState({});
-  const [visible, setVisible] = useState(true);
+  const [editUserStatus, setEditUserStatus] = useState(userStatus[0]);
 
   const handleChange = useCallback((field, value) => {
-    setNewPolicyStatus((prev) => ({ ...prev, [field]: value }));
+    setEditUserStatus((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   const handleSave = useCallback(
     (e) => {
-      const saveObject = { ...newPolicyStatus };
-      apiCall("POST", `PolicyStatuses`, e.validationGroup, "", saveObject)
+      apiCall(
+        "PUT",
+        `userstatuses/${editUserStatus?.userStatusId}`,
+        e.validationGroup,
+        "",
+        editUserStatus
+      )
         .then(() => {
           setToastMessage({
-            message: `Policy Status ${saveObject?.policyStatusName} created successfully`,
+            message: `User Status ${editUserStatus?.userStatusName} saved successfully`,
             type: "success",
           });
           resetPopup(null);
-          setVisible(false);
           setRefetch((prev) => !prev);
         })
         .catch((error) => {
           setToastMessage({
-            message: `Create policy status failed: ${error}`,
+            message: `Save user status failed: ${error}`,
             type: "error",
           });
-          console.error("Create policy status failed:", error);
+          console.error("Save user status failed:", error);
         });
     },
-    [JSON.stringify(newPolicyStatus), setToastMessage]
+    [JSON.stringify(editUserStatus)]
   );
 
   const renderContent = useCallback(() => {
@@ -57,18 +61,18 @@ const PolicyStatusCreateForm = ({
 
           <Item>
             <Location row={0} col={0} colspan={1} />
-
             <div className='p-2'>
               <TextBox
                 {...DefaultComponentConfig.TextBox}
-                label='Status Name'
-                value={newPolicyStatus?.policyStatusName}
+                label='User Status Name *'
+                value={editUserStatus?.userStatusName}
                 onValueChanged={({ value }) =>
-                  handleChange("policyStatusName", value)
+                  handleChange("userStatusName", value)
                 }
+                placeholder='User Status Name'
               >
                 <Validator>
-                  <RequiredRule message='Status Name is required' />
+                  <RequiredRule message='User status name is required' />
                 </Validator>
               </TextBox>
             </div>
@@ -76,17 +80,19 @@ const PolicyStatusCreateForm = ({
 
           <Item>
             <Location row={0} col={1} colspan={1} />
+
             <div className='p-2'>
               <TextBox
                 {...DefaultComponentConfig.TextBox}
-                label='Description'
-                value={newPolicyStatus?.policyStatusDescription}
+                label='User Status Description *'
+                value={editUserStatus?.userStatusDescription}
                 onValueChanged={({ value }) =>
-                  handleChange("policyStatusDescription", value)
+                  handleChange("userStatusDescription", value)
                 }
+                placeholder='User Status Description'
               >
                 <Validator>
-                  <RequiredRule message='Description is required' />
+                  <RequiredRule message='User status description is required' />
                 </Validator>
               </TextBox>
             </div>
@@ -101,42 +107,43 @@ const PolicyStatusCreateForm = ({
               stylingMode='outlined'
               type='danger'
               onClick={() => {
-                setRefetch((prev) => !prev);
                 resetPopup(null);
-                setVisible(false);
+                setRefetch((prev) => !prev);
               }}
             />
           </div>
           <div className='p-2'>
             <Button
               {...DefaultComponentConfig.Button}
+              text='Save'
               stylingMode='outlined'
               type='success'
-              text='Save'
               onClick={handleSave}
             />
           </div>
         </div>
       </div>
     );
-  }, [JSON.stringify(newPolicyStatus)]);
+  }, [JSON.stringify(editUserStatus)]);
 
   const onHiding = useCallback(() => {
-    setRefetch((prev) => !prev);
     resetPopup(null);
-  }, [setRefetch]);
+    setRefetch((prev) => !prev);
+  }, [resetPopup, setRefetch]);
 
   return (
     <div>
       <Popup
         {...DefaultComponentConfig.Popup}
-        title={`Create Policy Status`}
-        visible={visible}
+        title={`Edit User Status: ${editUserStatus?.userStatusName}`}
+        visible={true}
         onHiding={onHiding}
         contentRender={renderContent}
+        width={600}
+        height={600}
       />
     </div>
   );
 };
 
-export default PolicyStatusCreateForm;
+export default UserStatusEditForm;

@@ -11,40 +11,44 @@ import { TextBox, Button } from "devextreme-react/";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
 
-const PolicyStatusCreateForm = ({
+const PolicyTypeEditForm = ({
+  policyType,
   resetPopup,
   setRefetch,
   setToastMessage,
 }) => {
-  const [newPolicyStatus, setNewPolicyStatus] = useState({});
-  const [visible, setVisible] = useState(true);
+  const [editPolicyType, setEditPolicyType] = useState(policyType[0]);
 
   const handleChange = useCallback((field, value) => {
-    setNewPolicyStatus((prev) => ({ ...prev, [field]: value }));
+    setEditPolicyType((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   const handleSave = useCallback(
     (e) => {
-      const saveObject = { ...newPolicyStatus };
-      apiCall("POST", `PolicyStatuses`, e.validationGroup, "", saveObject)
+      apiCall(
+        "PUT",
+        `policytypes/${editPolicyType?.policyTypeId}`,
+        e.validationGroup,
+        "",
+        editPolicyType
+      )
         .then(() => {
           setToastMessage({
-            message: `Policy Status ${saveObject?.policyStatusName} created successfully`,
+            message: `Policy Type ${editPolicyType?.policyTypeName} saved successfully`,
             type: "success",
           });
           resetPopup(null);
-          setVisible(false);
           setRefetch((prev) => !prev);
         })
         .catch((error) => {
           setToastMessage({
-            message: `Create policy status failed: ${error}`,
+            message: `Save policy type failed: ${error}`,
             type: "error",
           });
-          console.error("Create policy status failed:", error);
+          console.error("Save policy type failed:", error);
         });
     },
-    [JSON.stringify(newPolicyStatus), setToastMessage]
+    [JSON.stringify(editPolicyType)]
   );
 
   const renderContent = useCallback(() => {
@@ -57,18 +61,18 @@ const PolicyStatusCreateForm = ({
 
           <Item>
             <Location row={0} col={0} colspan={1} />
-
             <div className='p-2'>
               <TextBox
                 {...DefaultComponentConfig.TextBox}
-                label='Status Name'
-                value={newPolicyStatus?.policyStatusName}
+                label='Policy Type Name *'
+                value={editPolicyType?.policyTypeName}
                 onValueChanged={({ value }) =>
-                  handleChange("policyStatusName", value)
+                  handleChange("policyTypeName", value)
                 }
+                placeholder='Policy Type Name'
               >
                 <Validator>
-                  <RequiredRule message='Status Name is required' />
+                  <RequiredRule message='Policy type name is required' />
                 </Validator>
               </TextBox>
             </div>
@@ -76,17 +80,19 @@ const PolicyStatusCreateForm = ({
 
           <Item>
             <Location row={0} col={1} colspan={1} />
+
             <div className='p-2'>
               <TextBox
                 {...DefaultComponentConfig.TextBox}
-                label='Description'
-                value={newPolicyStatus?.policyStatusDescription}
+                label='Policy Type Description *'
+                value={editPolicyType?.policyTypeDescription}
                 onValueChanged={({ value }) =>
-                  handleChange("policyStatusDescription", value)
+                  handleChange("policyTypeDescription", value)
                 }
+                placeholder='Policy Type Description'
               >
                 <Validator>
-                  <RequiredRule message='Description is required' />
+                  <RequiredRule message='Policy type description is required' />
                 </Validator>
               </TextBox>
             </div>
@@ -101,42 +107,43 @@ const PolicyStatusCreateForm = ({
               stylingMode='outlined'
               type='danger'
               onClick={() => {
-                setRefetch((prev) => !prev);
                 resetPopup(null);
-                setVisible(false);
+                setRefetch((prev) => !prev);
               }}
             />
           </div>
           <div className='p-2'>
             <Button
               {...DefaultComponentConfig.Button}
+              text='Save'
               stylingMode='outlined'
               type='success'
-              text='Save'
               onClick={handleSave}
             />
           </div>
         </div>
       </div>
     );
-  }, [JSON.stringify(newPolicyStatus)]);
+  }, [JSON.stringify(editPolicyType)]);
 
   const onHiding = useCallback(() => {
-    setRefetch((prev) => !prev);
     resetPopup(null);
-  }, [setRefetch]);
+    setRefetch((prev) => !prev);
+  }, [resetPopup, setRefetch]);
 
   return (
     <div>
       <Popup
         {...DefaultComponentConfig.Popup}
-        title={`Create Policy Status`}
-        visible={visible}
+        title={`Edit Policy Type: ${editPolicyType?.policyTypeName}`}
+        visible={true}
         onHiding={onHiding}
         contentRender={renderContent}
+        width={600}
+        height={600}
       />
     </div>
   );
 };
 
-export default PolicyStatusCreateForm;
+export default PolicyTypeEditForm;
