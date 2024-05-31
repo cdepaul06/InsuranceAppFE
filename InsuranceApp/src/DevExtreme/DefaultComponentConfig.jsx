@@ -19,7 +19,6 @@ export const DefaultComponentConfig = {
   },
 
   TextBox: {
-    showClearButton: true,
     valueChangeEvent: "focusout",
     inputAttr: { autocomplete: "new-password" },
     labelMode: "outside",

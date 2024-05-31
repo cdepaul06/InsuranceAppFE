@@ -13,8 +13,8 @@ const AdminLayout = ({}) => {
 
   return (
     <div className='flex h-screen w-full'>
-      <div className='w-[10%] bg-cyan-600'>
-        <div className='flex justify-center p-2'>
+      <div className='w-[10%] border-r border-solid border-cyan-500'>
+        <div className='flex justify-center'>
           <Navigation layout={"admin"} setGridRender={setGridRender} />
         </div>
       </div>

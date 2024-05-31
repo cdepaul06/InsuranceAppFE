@@ -10,8 +10,8 @@ const Navigation = ({ layout, setGridRender }) => {
         <div key={index} className='flex flex-col w-full'>
           <Button
             {...DefaultComponentConfig.Button}
+            style={{ borderRadius: 0, border: "1px solid" }}
             text={entity.buttonLabel}
-            type='normal'
             onClick={() => setGridRender(() => entity.component)}
           />
         </div>
