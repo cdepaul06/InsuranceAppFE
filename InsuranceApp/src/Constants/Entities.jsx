@@ -14,6 +14,9 @@ import UserStatusCreateForm from "../Components/UserStatuses/UserStatusCreateFor
 import UserStatusEditForm from "../Components/UserStatuses/UserStatusEditForm/UserStatusEditForm";
 import UserStatusDeleteForm from "../Components/UserStatuses/UserStatusDeleteForm/UserStatusDeleteForm";
 import UserTypesList from "../Components/UserTypes/UserTypesList/UserTypesList";
+import UserTypeCreateForm from "../Components/UserTypes/UserTypeCreateForm/UserTypeCreateForm";
+import UserTypeEditForm from "../Components/UserTypes/UserTypeEditForm/UserTypeEditForm";
+import UserTypeDeleteForm from "../Components/UserTypes/UserTypeDeleteForm/UserTypeDeleteForm";
 import UserEditForm from "../Components/Users/UserEditForm/UserEditForm";
 import UserCreateForm from "../Components/Users/UserCreateForm/UserCreateForm";
 import UserDeleteForm from "../Components/Users/UserDeleteForm/UserDeleteForm";
@@ -266,22 +269,34 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: () => {
-          console.log("Create User Type");
+        func: (userType, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: UserTypeCreateForm,
+            props: { userType, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
       EDIT: {
         actionName: "Edit",
         icon: "edit",
-        func: (userType) => {
-          console.log("Edit User Type");
+        min: 1,
+        max: 1,
+        func: (userType, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: UserTypeEditForm,
+            props: { userType, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
       DELETE: {
         actionName: "Delete",
         icon: "trash",
-        func: (userType) => {
-          console.log("Delete User Type");
+        min: 1,
+        func: (userTypes, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: UserTypeDeleteForm,
+            props: { userTypes, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
     },
