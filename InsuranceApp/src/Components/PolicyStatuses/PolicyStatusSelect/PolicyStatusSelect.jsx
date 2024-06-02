@@ -18,7 +18,13 @@ const fetchPolicyStatuses = (() => {
   };
 })();
 
-const PolicyStatusSelect = ({ value, onValueChanged, required = true }) => {
+const PolicyStatusSelect = ({
+  value,
+  onValueChanged,
+  required = true,
+  readOnly,
+  setResultsData,
+}) => {
   const [policyStatuses, setPolicyStatuses] = useState([]);
   const policyStatusSelectRef = useRef(null);
 
@@ -26,6 +32,7 @@ const PolicyStatusSelect = ({ value, onValueChanged, required = true }) => {
     fetchPolicyStatuses()
       .then((data) => {
         setPolicyStatuses(data);
+        !!setResultsData && setResultsData(data);
       })
       .catch((error) => {
         console.error(error);
@@ -38,9 +45,11 @@ const PolicyStatusSelect = ({ value, onValueChanged, required = true }) => {
         {...DefaultComponentConfig.SelectBox}
         ref={policyStatusSelectRef}
         dataSource={policyStatuses}
+        style={{ ...(readOnly && { color: "red" }) }}
         label='Policy Status *'
         displayExpr='policyStatusName'
         valueExpr='policyStatusId'
+        disabled={readOnly}
         value={value}
         placeholder='Select policy status'
         onValueChanged={onValueChanged}

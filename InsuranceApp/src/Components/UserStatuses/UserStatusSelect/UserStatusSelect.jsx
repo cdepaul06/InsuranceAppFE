@@ -18,7 +18,12 @@ const fetchUserStatuses = (() => {
   };
 })();
 
-const UserStatusSelect = ({ value, onValueChanged, required = true }) => {
+const UserStatusSelect = ({
+  value,
+  onValueChanged,
+  required = true,
+  setResultsData,
+}) => {
   const [userStatuses, setUserStatuses] = useState([]);
   const userStatusSelectRef = useRef(null);
 
@@ -26,6 +31,7 @@ const UserStatusSelect = ({ value, onValueChanged, required = true }) => {
     fetchUserStatuses()
       .then((data) => {
         setUserStatuses(data);
+        !!setResultsData && setResultsData(data);
       })
       .catch((error) => {
         console.error(error); // Error already logged in fetchUserStatuses

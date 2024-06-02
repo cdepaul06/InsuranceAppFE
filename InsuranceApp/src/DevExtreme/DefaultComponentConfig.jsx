@@ -33,6 +33,26 @@ export const DefaultComponentConfig = {
     inputAttr: { autocomplete: "new-password" },
   },
 
+  DateBox: {
+    displayFormat: "MM/dd/yyyy",
+    type: "date",
+    pickerType: "calendar",
+    showClearButton: true,
+    useMaskBehavior: true,
+    labelMode: "outside",
+  },
+
+  NumberBox: {
+    showSpinButtons: true,
+    labelMode: "outside",
+  },
+
+  NumberBox_Decimal: {
+    showSpinButtons: true,
+    labelMode: "outside",
+    format: "#,##0.00",
+  },
+
   Accordion: {},
 
   Toast: {

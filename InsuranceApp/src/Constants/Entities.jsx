@@ -1,4 +1,5 @@
 import CustomerPoliciesList from "../Components/CustomerPolicies/CustomerPoliciesList/CustomerPoliciesList";
+import CustomerPolicyCreateForm from "../Components/CustomerPolicies/CustomerPolicyCreateForm/CustomerPolicyCreateForm";
 import CustomersList from "../Components/Customers/CustomersList/CustomersList";
 import PolicyStatusesList from "../Components/PolicyStatuses/PolicyStatusesList/PolicyStatusesList";
 import PolicyStatusCreateForm from "../Components/PolicyStatuses/PolicyStatusCreateForm/PolicyStatusCreateForm";
@@ -33,8 +34,11 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: () => {
-          console.log("Create Customer Policy");
+        func: (customerPolicy, resetPopup, setRefetch, setToastMessage) => {
+          return {
+            component: CustomerPolicyCreateForm,
+            props: { customerPolicy, resetPopup, setRefetch, setToastMessage },
+          };
         },
       },
       EDIT: {

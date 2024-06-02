@@ -4,13 +4,13 @@ import { apiCall } from "../../../API";
 import { DefaultComponentConfig } from "../../../DevExtreme/DefaultComponentConfig";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 
-const fetchUserTypes = (() => {
+const fetchPolicyTypes = (() => {
   let dataPromise = null;
 
   return async () => {
     if (!dataPromise) {
-      dataPromise = apiCall("GET", "UserTypes").catch((error) => {
-        console.error("Get user types failed:", error);
+      dataPromise = apiCall("GET", "PolicyTypes").catch((error) => {
+        console.error("Get policy types failed:", error);
         throw error;
       });
     }
@@ -18,19 +18,19 @@ const fetchUserTypes = (() => {
   };
 })();
 
-const UserTypeSelect = ({
+const PolicyTypeSelect = ({
   value,
   onValueChanged,
   required = true,
   setResultsData,
 }) => {
-  const [userTypes, setUserTypes] = useState([]);
-  const userTypeSelectRef = useRef(null);
+  const [policyTypes, setPolicyTypes] = useState([]);
+  const policyTypeSelectRef = useRef(null);
 
   useEffect(() => {
-    fetchUserTypes()
+    fetchPolicyTypes()
       .then((data) => {
-        setUserTypes(data);
+        setPolicyTypes(data);
         !!setResultsData && setResultsData(data);
       })
       .catch((error) => {
@@ -42,18 +42,18 @@ const UserTypeSelect = ({
     <div>
       <SelectBox
         {...DefaultComponentConfig.SelectBox}
-        ref={userTypeSelectRef}
-        dataSource={userTypes}
-        label='User Type *'
-        displayExpr='userTypeName'
-        valueExpr='userTypeId'
+        ref={policyTypeSelectRef}
+        dataSource={policyTypes}
+        label='Policy Type *'
+        displayExpr='policyTypeName'
+        valueExpr='policyTypeId'
         value={value}
-        placeholder='Select user type'
+        placeholder='Select policy type'
         onValueChanged={onValueChanged}
       >
         {required && (
           <Validator>
-            <RequiredRule message='User type is required' />
+            <RequiredRule message='Policy type is required' />
           </Validator>
         )}
       </SelectBox>
@@ -61,4 +61,4 @@ const UserTypeSelect = ({
   );
 };
 
-export default UserTypeSelect;
+export default PolicyTypeSelect;
