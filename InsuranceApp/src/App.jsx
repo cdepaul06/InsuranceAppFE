@@ -58,10 +58,10 @@ const App = ({}) => {
           >
             <Validator>
               <RequiredRule message='Email is required' />
-              <PatternRule
+              {/* <PatternRule
                 message='Invalid email address'
                 pattern={`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`}
-              />
+              /> */}
             </Validator>
           </TextBox>
         </div>

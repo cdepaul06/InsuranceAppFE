@@ -19,19 +19,29 @@ import ResponsiveBox, {
 } from "devextreme-react/responsive-box";
 import Validator, {
   RequiredRule,
+  EmailRule,
   PatternRule,
 } from "devextreme-react/validator";
 import StateSelect from "../../StateSelect/StateSelect";
+import { ValidationGroup } from "devextreme-react/validation-group";
 
 const fetchCustomers = (() => {
   let dataPromise = null;
 
   return async () => {
     if (!dataPromise) {
-      dataPromise = apiCall("GET", "Customers").catch((error) => {
-        console.error("Get customers failed:", error);
-        throw error;
-      });
+      dataPromise = apiCall("GET", "Customers")
+        .then((data) => {
+          // Reset the promise after data is fetched
+          dataPromise = null;
+          return data;
+        })
+        .catch((error) => {
+          console.error("Get customers failed:", error);
+          // Reset the promise even if there's an error
+          dataPromise = null;
+          throw error;
+        });
     }
     return dataPromise;
   };
@@ -48,6 +58,7 @@ const CustomerSelect = ({
   const [newCustomer, setNewCustomer] = useState(null);
   const [open, setOpen] = useState(false);
   const customerSelectRef = useRef(null);
+  const validatorRef = useRef(null);
 
   useEffect(() => {
     fetchCustomers()
@@ -99,6 +110,28 @@ const CustomerSelect = ({
     []
   );
 
+  const refreshButton = useMemo(
+    () => ({
+      name: "refresh",
+      location: "after",
+      options: {
+        icon: "refresh",
+        stylingMode: "text",
+        onClick: () => {
+          fetchCustomers()
+            .then((data) => {
+              setCustomers(data);
+              !!setResultsData && setResultsData(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        },
+      },
+    }),
+    []
+  );
+
   const onHiding = useCallback(() => {
     setOpen(false);
     setNewCustomer(null);
@@ -119,7 +152,7 @@ const CustomerSelect = ({
             message: `Customer ${newCustomer?.firstName} ${newCustomer?.lastName} created successfully`,
             type: "success",
           });
-          setRefetch((prev) => !prev);
+          setOpen(false);
         })
         .catch((error) => {
           setToastMessage({
@@ -135,171 +168,178 @@ const CustomerSelect = ({
   const renderContent = useCallback(() => {
     return (
       <div className='flex flex-col items-center'>
-        <ResponsiveBox>
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Col ratio={1} />
-          <Col ratio={1} />
+        <ValidationGroup ref={validatorRef}>
+          <ResponsiveBox>
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Col ratio={1} />
+            <Col ratio={1} />
 
-          <Item>
-            <Location row={0} col={0} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.firstName}
-                label='First Name *'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("firstName", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='First name is required' />
-                </Validator>
-              </TextBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={0} col={0} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.firstName}
+                  label='First Name *'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("firstName", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='First name is required' />
+                  </Validator>
+                </TextBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={0} col={1} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.lastName}
-                label='Last Name *'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("lastName", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Last name is required' />
-                </Validator>
-              </TextBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={0} col={1} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.lastName}
+                  label='Last Name *'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("lastName", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='Last name is required' />
+                  </Validator>
+                </TextBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={1} col={0} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.phone}
-                label='Phone *'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("phone", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Phone is required' />
-                </Validator>
-              </TextBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={1} col={0} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.phone}
+                  label='Phone *'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("phone", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='Phone is required' />
+                    <PatternRule
+                      message='Invalid phone number'
+                      pattern={`^\\d{3}-\\d{3}-\\d{4}$`}
+                    />
+                  </Validator>
+                </TextBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={1} col={1} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.email}
-                label='Email *'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("email", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Email is required' />
-                  <PatternRule
-                    message='Invalid email address'
-                    pattern={`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`}
-                  />
-                </Validator>
-              </TextBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={1} col={1} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.email}
+                  label='Email *'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("email", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='Email is required' />
+                    <EmailRule message='Invalid email' />
+                  </Validator>
+                </TextBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={2} col={0} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.address}
-                label='Address *'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("address", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Address is required' />
-                </Validator>
-              </TextBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={2} col={0} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.address}
+                  label='Address *'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("address1", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='Address is required' />
+                  </Validator>
+                </TextBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={2} col={1} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.address2}
-                label='Address 2'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("address2", value)
-                }
-              />
-            </div>
-          </Item>
+            <Item>
+              <Location row={2} col={1} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.address2}
+                  label='Address 2'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("address2", value)
+                  }
+                />
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={3} col={0} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.city}
-                label='City *'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("city", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='City is required' />
-                </Validator>
-              </TextBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={3} col={0} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.city}
+                  label='City *'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("city", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='City is required' />
+                  </Validator>
+                </TextBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={3} col={1} colspan={1} />
-            <div className='p-2'>
-              <StateSelect
-                value={newCustomer?.state}
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("state", value)
-                }
-              />
-            </div>
-          </Item>
+            <Item>
+              <Location row={3} col={1} colspan={1} />
+              <div className='p-2'>
+                <StateSelect
+                  value={newCustomer?.state}
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("state", value)
+                  }
+                />
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={4} col={0} colspan={1} />
-            <div className='p-2'>
-              <TextBox
-                {...DefaultComponentConfig.TextBox}
-                value={newCustomer?.zipCode}
-                label='Zip Code *'
-                onValueChanged={({ value }) =>
-                  handleNewCustomerChange("zipCode", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Zip code is required' />
-                </Validator>
-              </TextBox>
-            </div>
-          </Item>
-        </ResponsiveBox>
+            <Item>
+              <Location row={4} col={0} colspan={1} />
+              <div className='p-2'>
+                <TextBox
+                  {...DefaultComponentConfig.TextBox}
+                  value={newCustomer?.zipCode}
+                  label='Zip Code *'
+                  onValueChanged={({ value }) =>
+                    handleNewCustomerChange("zip", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='Zip code is required' />
+                    <PatternRule
+                      message='Invalid zip code'
+                      pattern={`^\\d{5}$`}
+                    />
+                  </Validator>
+                </TextBox>
+              </div>
+            </Item>
+          </ResponsiveBox>
+        </ValidationGroup>
 
         <div className='fixed bottom-10 flex flex-row'>
           <div className='p-2'>
@@ -342,7 +382,7 @@ const CustomerSelect = ({
         placeholder='Select customer'
         onValueChanged={onValueChanged}
         dropDownOptions={{ minHeight: "10rem" }}
-        buttons={[addButton, "dropDown"]}
+        buttons={[refreshButton, addButton, "dropDown"]}
       >
         {required && (
           <Validator>

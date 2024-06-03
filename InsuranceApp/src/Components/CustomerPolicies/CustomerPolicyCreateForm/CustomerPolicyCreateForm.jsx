@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React, { useCallback, useState, useMemo, useRef } from "react";
 import { Popup } from "devextreme-react/popup";
 import { DefaultComponentConfig } from "../../../DevExtreme/DefaultComponentConfig";
 import ResponsiveBox, {
@@ -9,6 +9,7 @@ import ResponsiveBox, {
 } from "devextreme-react/responsive-box";
 import { TextBox, DateBox, Button, Switch, NumberBox } from "devextreme-react/";
 import Validator, { RequiredRule } from "devextreme-react/validator";
+import { ValidationGroup } from "devextreme-react/validation-group";
 import { apiCall } from "../../../API";
 import PolicyTypeSelect from "../../PolicyTypes/PolicyTypeSelect/PolicyTypeSelect";
 import PolicyStatusSelect from "../../PolicyStatuses/PolicyStatusSelect/PolicyStatusSelect";
@@ -25,8 +26,8 @@ const CustomerPolicyCreateForm = ({
     policyStartDate: new Date(),
     policyEndDate: new Date(),
   });
-  const [existingCustomer, setExistingCustomer] = useState(true);
   const [visible, setVisible] = useState(true);
+  const validatorRef = useRef(null);
 
   const handleChange = useCallback((field, value) => {
     setNewCustomerPolicy((prev) => ({ ...prev, [field]: value }));
@@ -75,117 +76,117 @@ const CustomerPolicyCreateForm = ({
   const renderContent = useCallback(() => {
     return (
       <div className='flex flex-col items-center'>
-        <ResponsiveBox>
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Row ratio={1} />
-          <Row ratio={1} />
+        <ValidationGroup ref={validatorRef}>
+          <ResponsiveBox>
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Row ratio={1} />
+            <Row ratio={1} />
 
-          <Col ratio={1} />
-          <Col ratio={1} />
+            <Col ratio={1} />
+            <Col ratio={1} />
 
-          <Item>
-            <Location row={0} col={0} colspan={2} />
-            <div className='p-2'>
-              <CustomerSelect
-                value={newCustomerPolicy?.customerId}
-                setToastMessage={setToastMessage}
-                onValueChanged={({ value }) =>
-                  handleChange("customerId", value)
-                }
-                required
-              />
-            </div>
-          </Item>
+            <Item>
+              <Location row={0} col={0} colspan={2} />
+              <div className='p-2'>
+                <CustomerSelect
+                  value={newCustomerPolicy?.customerId}
+                  setToastMessage={setToastMessage}
+                  onValueChanged={({ value }) =>
+                    handleChange("customerId", value)
+                  }
+                  required
+                />
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={3} col={0} colspan={1} />
-            <div className='p-2'>
-              <PolicyTypeSelect
-                value={newCustomerPolicy?.policyTypeId}
-                onValueChanged={({ value }) => {
-                  handleChange("policyTypeId", value);
-                }}
-              />
-            </div>
-          </Item>
+            <Item>
+              <Location row={3} col={0} colspan={1} />
+              <div className='p-2'>
+                <PolicyTypeSelect
+                  value={newCustomerPolicy?.policyTypeId}
+                  onValueChanged={({ value }) => {
+                    handleChange("policyTypeId", value);
+                  }}
+                />
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={3} col={1} colspan={1} />
-            <div className='p-2'>
-              <PolicyStatusSelect
-                value={newCustomerPolicy?.policyStatusId}
-                readOnly={true}
-                onValueChanged={({ value }) =>
-                  handleChange("policyStatusId", value)
-                }
-              />
-            </div>
-          </Item>
+            <Item>
+              <Location row={3} col={1} colspan={1} />
+              <div className='p-2'>
+                <PolicyStatusSelect
+                  value={newCustomerPolicy?.policyStatusId}
+                  readOnly={true}
+                  onValueChanged={({ value }) =>
+                    handleChange("policyStatusId", value)
+                  }
+                />
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={4} col={0} colspan={1} />
-            <div className='p-2'>
-              <DateBox
-                {...DefaultComponentConfig.DateBox}
-                label='Policy Start Date *'
-                value={newCustomerPolicy?.policyStartDate}
-                onValueChanged={({ value }) => {
-                  handleChange("policyStartDate", value);
-                  calculatePolicyEndDate();
-                }}
-              >
-                <Validator>
-                  <RequiredRule message='Policy start date is required' />
-                </Validator>
-              </DateBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={4} col={0} colspan={1} />
+              <div className='p-2'>
+                <DateBox
+                  {...DefaultComponentConfig.DateBox}
+                  label='Policy Start Date *'
+                  value={newCustomerPolicy?.policyStartDate}
+                  onValueChanged={({ value }) => {
+                    handleChange("policyStartDate", value);
+                    calculatePolicyEndDate();
+                  }}
+                >
+                  <Validator>
+                    <RequiredRule message='Policy start date is required' />
+                  </Validator>
+                </DateBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={4} col={1} colspan={1} />
-            <div className='p-2'>
-              <DateBox
-                {...DefaultComponentConfig.DateBox}
-                label='Policy End Date *'
-                value={newCustomerPolicy?.policyEndDate}
-                onValueChanged={({ value }) =>
-                  handleChange("policyEndDate", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Policy end date is required' />
-                </Validator>
-              </DateBox>
-            </div>
-          </Item>
+            <Item>
+              <Location row={4} col={1} colspan={1} />
+              <div className='p-2'>
+                <DateBox
+                  {...DefaultComponentConfig.DateBox}
+                  label='Policy End Date *'
+                  value={newCustomerPolicy?.policyEndDate}
+                  onValueChanged={({ value }) =>
+                    handleChange("policyEndDate", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='Policy end date is required' />
+                  </Validator>
+                </DateBox>
+              </div>
+            </Item>
 
-          <Item>
-            <Location row={5} col={0} colspan={1} />
-            <div className='p-2'>
-              <NumberBox
-                {...DefaultComponentConfig.NumberBox_Decimal}
-                label='Policy Premium *'
-                min={0}
-                value={newCustomerPolicy?.policyPremium}
-                onValueChanged={({ value }) =>
-                  handleChange("policyPremium", value)
-                }
-              >
-                <Validator>
-                  <RequiredRule message='Policy premium is required' />
-                </Validator>
-              </NumberBox>
-            </div>
-          </Item>
-        </ResponsiveBox>
+            <Item>
+              <Location row={5} col={0} colspan={1} />
+              <div className='p-2'>
+                <NumberBox
+                  {...DefaultComponentConfig.NumberBox_Decimal}
+                  label='Policy Premium *'
+                  min={0}
+                  value={newCustomerPolicy?.policyPremium}
+                  onValueChanged={({ value }) =>
+                    handleChange("policyPremium", value)
+                  }
+                >
+                  <Validator>
+                    <RequiredRule message='Policy premium is required' />
+                  </Validator>
+                </NumberBox>
+              </div>
+            </Item>
+          </ResponsiveBox>
+        </ValidationGroup>
       </div>
     );
-  }, [JSON.stringify(newCustomerPolicy), existingCustomer]);
-
-  console.log("### newCustomerPolicy", newCustomerPolicy);
+  }, [JSON.stringify(newCustomerPolicy)]);
 
   const onHiding = useCallback(() => {
     setRefetch((prev) => !prev);
