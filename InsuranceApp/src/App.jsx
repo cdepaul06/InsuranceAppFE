@@ -2,10 +2,7 @@ import "./App.css";
 import "devextreme/dist/css/dx.dark.css";
 import { Popup, TextBox, Button } from "devextreme-react";
 import { DefaultComponentConfig } from "./DevExtreme/DefaultComponentConfig";
-import Validator, {
-  RequiredRule,
-  PatternRule,
-} from "devextreme-react/validator";
+import Validator, { RequiredRule, EmailRule } from "devextreme-react/validator";
 import { useCallback, useEffect, useState } from "react";
 import { apiCall } from "./API";
 import { useNavigate } from "react-router-dom";
@@ -58,10 +55,7 @@ const App = ({}) => {
           >
             <Validator>
               <RequiredRule message='Email is required' />
-              {/* <PatternRule
-                message='Invalid email address'
-                pattern={`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`}
-              /> */}
+              <EmailRule message='Invalid email address' />
             </Validator>
           </TextBox>
         </div>
