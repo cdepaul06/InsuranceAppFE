@@ -12,6 +12,7 @@ import Validator, { RequiredRule } from "devextreme-react/validator";
 import { apiCall } from "../../../API";
 import PolicyTypeSelect from "../../PolicyTypes/PolicyTypeSelect/PolicyTypeSelect";
 import PolicyStatusSelect from "../../PolicyStatuses/PolicyStatusSelect/PolicyStatusSelect";
+import CustomerSelect from "../../Customers/CustomerSelect/CustomerSelect";
 
 const CustomerPolicyCreateForm = ({
   resetPopup,
@@ -19,14 +20,12 @@ const CustomerPolicyCreateForm = ({
   setToastMessage,
 }) => {
   const [newCustomerPolicy, setNewCustomerPolicy] = useState({
-    policyStatusId: 1,
-    policyTypeId: 1,
+    policyStatusId: 1, // * Active
+    policyTypeId: 1, // * Auto
     policyStartDate: new Date(),
     policyEndDate: new Date(),
   });
   const [existingCustomer, setExistingCustomer] = useState(true);
-
-  const [policyStatuses, setPolicyStatuses] = useState([]);
   const [visible, setVisible] = useState(true);
 
   const handleChange = useCallback((field, value) => {
@@ -76,16 +75,6 @@ const CustomerPolicyCreateForm = ({
   const renderContent = useCallback(() => {
     return (
       <div className='flex flex-col items-center'>
-        <div className='p-2 w-full'>
-          <Switch
-            defaultValue={false}
-            style={{ width: "125px" }}
-            switchedOffText='New Customer'
-            value={existingCustomer}
-            switchedOnText='Existing Customer'
-            onValueChanged={({ value }) => setExistingCustomer(value)}
-          />
-        </div>
         <ResponsiveBox>
           <Row ratio={1} />
           <Row ratio={1} />
@@ -98,7 +87,17 @@ const CustomerPolicyCreateForm = ({
           <Col ratio={1} />
 
           <Item>
-            <Location row={0} col={0} colspan={1} />
+            <Location row={0} col={0} colspan={2} />
+            <div className='p-2'>
+              <CustomerSelect
+                value={newCustomerPolicy?.customerId}
+                setToastMessage={setToastMessage}
+                onValueChanged={({ value }) =>
+                  handleChange("customerId", value)
+                }
+                required
+              />
+            </div>
           </Item>
 
           <Item>
@@ -184,7 +183,7 @@ const CustomerPolicyCreateForm = ({
         </ResponsiveBox>
       </div>
     );
-  }, [JSON.stringify(newCustomerPolicy)]);
+  }, [JSON.stringify(newCustomerPolicy), existingCustomer]);
 
   console.log("### newCustomerPolicy", newCustomerPolicy);
 
