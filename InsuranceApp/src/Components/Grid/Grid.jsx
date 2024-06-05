@@ -78,6 +78,23 @@ const Grid = ({ fetchObject, title, columns, ...props }) => {
     setSelectedEntities(selectedRows);
   }, []);
 
+  const handleActionClick = useCallback(
+    (action) => {
+      const { component, props } = action.func(
+        selectedEntities,
+        setSelectedPopup,
+        setRefetch,
+        setToastMessage
+      );
+      if (component) {
+        setSelectedPopup({ component, props });
+      } else {
+        setSelectedPopup(null);
+      }
+    },
+    [selectedEntities]
+  );
+
   // * Render actions based on the entity
   const renderActions = useCallback(() => {
     const entity = entities.find(
@@ -94,24 +111,13 @@ const Grid = ({ fetchObject, title, columns, ...props }) => {
           <Button
             {...DefaultComponentConfig.Button}
             text={action.actionName}
+            style={{ backgroundColor: "#06b6d4" }}
             disabled={
               selectedEntities?.length < action.min ||
               selectedEntities?.length > action.max
             }
             icon={action.icon}
-            onClick={() => {
-              const { component, props } = action.func(
-                selectedEntities,
-                setSelectedPopup,
-                setRefetch,
-                setToastMessage
-              );
-              if (component) {
-                setSelectedPopup({ component, props });
-              } else {
-                setSelectedPopup(null);
-              }
-            }}
+            onClick={() => handleActionClick(action)}
           />
         </Item>
       );
