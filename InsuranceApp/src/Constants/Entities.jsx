@@ -1,7 +1,6 @@
 import CustomerPoliciesList from "../Components/CustomerPolicies/CustomerPoliciesList/CustomerPoliciesList";
 import CustomerPolicyCreateForm from "../Components/CustomerPolicies/CustomerPolicyCreateForm/CustomerPolicyCreateForm";
 import CustomersList from "../Components/Customers/CustomersList/CustomersList";
-import CustomerCreateForm from "../Components/Customers/CustomerCreateForm/CustomerCreateForm";
 import PolicyStatusesList from "../Components/PolicyStatuses/PolicyStatusesList/PolicyStatusesList";
 import PolicyStatusCreateForm from "../Components/PolicyStatuses/PolicyStatusCreateForm/PolicyStatusCreateForm";
 import PolicyStatusEditForm from "../Components/PolicyStatuses/PolicyStatusEditForm/PolicyStatusEditForm";
