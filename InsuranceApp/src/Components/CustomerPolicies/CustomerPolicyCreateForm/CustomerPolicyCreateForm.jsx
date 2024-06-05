@@ -75,8 +75,8 @@ const CustomerPolicyCreateForm = ({
 
   const renderContent = useCallback(() => {
     return (
-      <div className='flex flex-col items-center'>
-        <ValidationGroup ref={validatorRef}>
+      <ValidationGroup ref={validatorRef}>
+        <div className='flex flex-col items-center'>
           <ResponsiveBox>
             <Row ratio={1} />
             <Row ratio={1} />
@@ -183,8 +183,8 @@ const CustomerPolicyCreateForm = ({
               </div>
             </Item>
           </ResponsiveBox>
-        </ValidationGroup>
-      </div>
+        </div>
+      </ValidationGroup>
     );
   }, [JSON.stringify(newCustomerPolicy)]);
 

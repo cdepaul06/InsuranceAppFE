@@ -17,6 +17,7 @@ import { Toast } from "devextreme-react/toast";
 import { apiCall } from "../../API/index";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 import { entities } from "../../Constants/Entities";
+import notify from "devextreme/ui/notify";
 
 /**
  * Main Grid component used in the application.
@@ -43,6 +44,10 @@ const Grid = ({ fetchObject, title, columns, ...props }) => {
     await apiCall("GET", fetchObject.endpoint)
       .then((data) => {
         setGridData(data);
+        setToastMessage({
+          message: `Successfully fetched data for ${title}`,
+          type: "success",
+        });
       })
       .catch((error) => {
         console.error("Fetch data failed:", error);
@@ -61,6 +66,7 @@ const Grid = ({ fetchObject, title, columns, ...props }) => {
   useEffect(() => {
     if (refetch) {
       fetchData();
+      dataGridRef.current.instance.deselectAll();
     }
 
     return () => {

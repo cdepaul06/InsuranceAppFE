@@ -3,12 +3,7 @@ import { SelectBox } from "devextreme-react/select-box";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { DefaultComponentConfig } from "../../DevExtreme/DefaultComponentConfig";
 
-const StateSelect = ({
-  value,
-  onValueChanged,
-  required = true,
-  setResultsData,
-}) => {
+const StateSelect = ({ onValueChanged, required = true, setResultsData }) => {
   const states = useMemo(
     () => [
       { abbr: "AL", text: "Alabama" },
