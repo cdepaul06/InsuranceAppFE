@@ -1,6 +1,8 @@
 import CustomerPoliciesList from "../Components/CustomerPolicies/CustomerPoliciesList/CustomerPoliciesList";
 import CustomerPolicyCreateForm from "../Components/CustomerPolicies/CustomerPolicyCreateForm/CustomerPolicyCreateForm";
 import CustomersList from "../Components/Customers/CustomersList/CustomersList";
+import CustomerCreateForm from "../Components/Customers/CustomerCreateForm/CustomerCreateForm";
+import CustomerDeleteForm from "../Components/Customers/CustomerDeleteForm/CustomerDeleteForm";
 import PolicyStatusesList from "../Components/PolicyStatuses/PolicyStatusesList/PolicyStatusesList";
 import PolicyStatusCreateForm from "../Components/PolicyStatuses/PolicyStatusCreateForm/PolicyStatusCreateForm";
 import PolicyStatusEditForm from "../Components/PolicyStatuses/PolicyStatusEditForm/PolicyStatusEditForm";
@@ -72,9 +74,23 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (customer, resetPopup, setRefetch, setToastMessage) => ({
+        func: (
+          customer,
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {},
+          open = true,
+          setOpen = () => {}
+        ) => ({
           component: CustomerCreateForm,
-          props: { customer, resetPopup, setRefetch, setToastMessage },
+          props: {
+            customer,
+            resetPopup,
+            setRefetch,
+            setToastMessage,
+            open,
+            setOpen,
+          },
         }),
       },
       EDIT: {
@@ -90,9 +106,10 @@ export const entities = [
         actionName: "Delete",
         min: 1,
         icon: "trash",
-        func: (customer) => {
-          console.log("Delete Customer");
-        },
+        func: (customers, resetPopup, setRefetch, setToastMessage) => ({
+          component: CustomerDeleteForm,
+          props: { customers, resetPopup, setRefetch, setToastMessage },
+        }),
       },
     },
   },

@@ -41,8 +41,14 @@ const CustomersList = ({}) => {
     },
     {
       alignment: "left",
-      dataField: "address",
-      caption: "Address",
+      dataField: "address1",
+      caption: "Address1",
+      dataType: "string",
+    },
+    {
+      alignment: "left",
+      dataField: "address2",
+      caption: "Address2",
       dataType: "string",
     },
     {

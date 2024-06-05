@@ -19,11 +19,20 @@ import StateSelect from "../../StateSelect/StateSelect";
 import { ValidationGroup } from "devextreme-react/validation-group";
 import { getScreenSize } from "../../../Utilities";
 
-const CustomerCreateForm = ({ setToastMessage, setOpen, open }) => {
+const CustomerCreateForm = ({
+  resetPopup,
+  setRefetch,
+  setToastMessage,
+  setOpen,
+  open,
+}) => {
   const validatorRef = useRef(null);
   const [newCustomer, setNewCustomer] = useState(null);
+
   const onHiding = useCallback(() => {
-    setOpen(false);
+    !!setOpen && setOpen(false);
+    !!resetPopup && resetPopup();
+    !!setRefetch && setRefetch((prev) => !prev);
     setNewCustomer(null);
   }, []);
 
@@ -42,7 +51,7 @@ const CustomerCreateForm = ({ setToastMessage, setOpen, open }) => {
             message: `Customer ${newCustomer?.firstName} ${newCustomer?.lastName} created successfully`,
             type: "success",
           });
-          setOpen(false);
+          onHiding();
         })
         .catch((error) => {
           setToastMessage({
@@ -250,10 +259,7 @@ const CustomerCreateForm = ({ setToastMessage, setOpen, open }) => {
                 text='Cancel'
                 stylingMode='outlined'
                 type='danger'
-                onClick={() => {
-                  setOpen(false);
-                  setNewCustomer(null);
-                }}
+                onClick={onHiding}
               />
             </div>
             <div className='p-2'>

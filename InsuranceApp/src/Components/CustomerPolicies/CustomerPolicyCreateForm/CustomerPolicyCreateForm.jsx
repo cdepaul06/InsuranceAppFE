@@ -7,7 +7,7 @@ import ResponsiveBox, {
   Item,
   Location,
 } from "devextreme-react/responsive-box";
-import { TextBox, DateBox, Button, Switch, NumberBox } from "devextreme-react/";
+import { DateBox, NumberBox } from "devextreme-react/";
 import Validator, { RequiredRule } from "devextreme-react/validator";
 import { ValidationGroup } from "devextreme-react/validation-group";
 import { apiCall } from "../../../API";

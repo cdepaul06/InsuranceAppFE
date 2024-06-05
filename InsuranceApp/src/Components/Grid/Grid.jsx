@@ -160,6 +160,7 @@ const Grid = ({ fetchObject, title, columns, ...props }) => {
             <Button
               {...DefaultComponentConfig.Button}
               icon='refresh'
+              style={{ backgroundColor: "#06b6d4" }}
               onClick={() => {
                 dataGridRef.current.instance.clearSelection();
                 dataGridRef.current.instance.state({
