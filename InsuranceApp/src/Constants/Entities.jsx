@@ -36,7 +36,12 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (customerPolicy, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          customerPolicy = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: CustomerPolicyCreateForm,
             props: { customerPolicy, resetPopup, setRefetch, setToastMessage },
@@ -98,15 +103,37 @@ export const entities = [
         icon: "edit",
         min: 1,
         max: 1,
-        func: (customer) => {
-          console.log("Edit Customer");
+        func: (
+          customer,
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {},
+          open = true,
+          setOpen = () => {}
+        ) => {
+          return {
+            component: {},
+            props: {
+              customer,
+              resetPopup,
+              setRefetch,
+              setToastMessage,
+              open,
+              setOpen,
+            },
+          };
         },
       },
       DELETE: {
         actionName: "Delete",
         min: 1,
         icon: "trash",
-        func: (customers, resetPopup, setRefetch, setToastMessage) => ({
+        func: (
+          customers = [],
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => ({
           component: CustomerDeleteForm,
           props: { customers, resetPopup, setRefetch, setToastMessage },
         }),
@@ -125,7 +152,12 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (policyStatus, resetPopup, setRefetch, setToastMessage) => ({
+        func: (
+          policyStatus = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => ({
           component: PolicyStatusCreateForm,
           props: { policyStatus, resetPopup, setRefetch, setToastMessage },
         }),
@@ -135,7 +167,12 @@ export const entities = [
         icon: "edit",
         min: 1,
         max: 1,
-        func: (policyStatus, resetPopup, setRefetch, setToastMessage) => ({
+        func: (
+          policyStatus = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => ({
           component: PolicyStatusEditForm,
           props: { policyStatus, resetPopup, setRefetch, setToastMessage },
         }),
@@ -144,7 +181,12 @@ export const entities = [
         actionName: "Delete",
         min: 1,
         icon: "trash",
-        func: (policyStatuses, resetPopup, setRefetch, setToastMessages) => {
+        func: (
+          policyStatuses = [],
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessages = () => {}
+        ) => {
           return {
             component: PolicyStatusDeleteForm,
             props: { policyStatuses, resetPopup, setRefetch, setToastMessages },
@@ -165,7 +207,12 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (policyType, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          policyType = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: PolicyTypeCreateForm,
             props: { policyType, resetPopup, setRefetch, setToastMessage },
@@ -177,7 +224,12 @@ export const entities = [
         icon: "edit",
         min: 1,
         max: 1,
-        func: (policyType, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          policyType = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: PolicyTypeEditForm,
             props: { policyType, resetPopup, setRefetch, setToastMessage },
@@ -188,7 +240,12 @@ export const entities = [
         actionName: "Delete",
         icon: "trash",
         min: 1,
-        func: (policyTypes, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          policyTypes = [],
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: PolicyTypeDeleteForm,
             props: { policyTypes, resetPopup, setRefetch, setToastMessage },
@@ -209,7 +266,12 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (user, resetPopup, setRefetch, setToastMessage) => ({
+        func: (
+          user = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => ({
           component: UserCreateForm,
           props: { user, resetPopup, setRefetch, setToastMessage },
         }),
@@ -219,7 +281,12 @@ export const entities = [
         icon: "edit",
         min: 1,
         max: 1,
-        func: (user, resetPopup, setRefetch, setToastMessage) => ({
+        func: (
+          user = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => ({
           component: UserEditForm,
           props: { user, resetPopup, setRefetch, setToastMessage },
         }),
@@ -228,7 +295,12 @@ export const entities = [
         actionName: "Delete",
         icon: "trash",
         min: 1,
-        func: (users, resetPopup, setRefetch, setToastMessage) => ({
+        func: (
+          users = [],
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => ({
           component: UserDeleteForm,
           props: { users, resetPopup, setRefetch, setToastMessage },
         }),
@@ -247,7 +319,12 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (userStatus, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          userStatus = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: UserStatusCreateForm,
             props: { userStatus, resetPopup, setRefetch, setToastMessage },
@@ -259,7 +336,12 @@ export const entities = [
         icon: "edit",
         min: 1,
         max: 1,
-        func: (userStatus, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          userStatus = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: UserStatusEditForm,
             props: { userStatus, resetPopup, setRefetch, setToastMessage },
@@ -270,7 +352,12 @@ export const entities = [
         actionName: "Delete",
         icon: "trash",
         min: 1,
-        func: (userStatuses, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          userStatuses = [],
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: UserStatusDeleteForm,
             props: { userStatuses, resetPopup, setRefetch, setToastMessage },
@@ -291,7 +378,12 @@ export const entities = [
       CREATE: {
         actionName: "Create",
         icon: "add",
-        func: (userType, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          userType = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: UserTypeCreateForm,
             props: { userType, resetPopup, setRefetch, setToastMessage },
@@ -303,7 +395,12 @@ export const entities = [
         icon: "edit",
         min: 1,
         max: 1,
-        func: (userType, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          userType = {},
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: UserTypeEditForm,
             props: { userType, resetPopup, setRefetch, setToastMessage },
@@ -314,7 +411,12 @@ export const entities = [
         actionName: "Delete",
         icon: "trash",
         min: 1,
-        func: (userTypes, resetPopup, setRefetch, setToastMessage) => {
+        func: (
+          userTypes = [],
+          resetPopup = () => {},
+          setRefetch = () => {},
+          setToastMessage = () => {}
+        ) => {
           return {
             component: UserTypeDeleteForm,
             props: { userTypes, resetPopup, setRefetch, setToastMessage },

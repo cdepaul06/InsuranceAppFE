@@ -20,6 +20,7 @@ import { apiCall } from "../../../API";
 import PolicyTypeSelect from "../../PolicyTypes/PolicyTypeSelect/PolicyTypeSelect";
 import PolicyStatusSelect from "../../PolicyStatuses/PolicyStatusSelect/PolicyStatusSelect";
 import CustomerSelect from "../../Customers/CustomerSelect/CustomerSelect";
+import AddVehicleForm from "../../AddVehicleForm/AddVehicleForm";
 
 const CustomerPolicyCreateForm = ({
   resetPopup,
@@ -98,6 +99,8 @@ const CustomerPolicyCreateForm = ({
         break;
     }
   }, [newCustomerPolicy?.policyTypeId]);
+
+  const itemRender = useCallback(() => <AddVehicleForm />, []);
 
   const renderContent = useCallback(() => {
     return (
@@ -196,6 +199,10 @@ const CustomerPolicyCreateForm = ({
                 <Accordion
                   collapsible={true}
                   dataSource={[{ title: `${accordionTitle}`, items: [] }]}
+                  itemRender={itemRender}
+                  onContentReady={(e) => {
+                    e.component.collapseItem(0);
+                  }}
                   style={{
                     border: "1px solid var(--cyan-500)",
                   }}
