@@ -100,7 +100,13 @@ const CustomerPolicyCreateForm = ({
     }
   }, [newCustomerPolicy?.policyTypeId]);
 
-  const itemRender = useCallback(() => <AddVehicleForm />, []);
+  const itemRender = useCallback(() => {
+    return (
+      <div className='max-h-64 scroll-smooth overflow-auto'>
+        <AddVehicleForm />
+      </div>
+    );
+  }, []);
 
   const renderContent = useCallback(() => {
     return (

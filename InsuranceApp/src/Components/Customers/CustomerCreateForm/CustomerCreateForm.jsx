@@ -128,6 +128,7 @@ const CustomerCreateForm = ({
                   {...DefaultComponentConfig.TextBox}
                   value={newCustomer?.phone}
                   label='Phone *'
+                  mode='tel'
                   onValueChanged={({ value }) =>
                     handleNewCustomerChange("phone", value)
                   }

@@ -5,3 +5,19 @@
 :root {
   --cyan-500: #06b6d4;
 }
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 7.5px;
+  background: #222222;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cyan-500);
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+  background: #222222;
+  -webkit-border-radius: 1ex;
+}
