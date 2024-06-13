@@ -15,10 +15,10 @@ import ResponsiveBox, {
   Item,
   Location,
 } from "devextreme-react/responsive-box";
+import { v1 } from "uuid";
 
 const AddVehicleForm = ({}) => {
-  const [newVehicle, setNewVehicle] = useState(null);
-  console.log("newVehicle:", newVehicle);
+  const [newVehicle, setNewVehicle] = useState({});
 
   const handleChange = useCallback((field, value) => {
     setNewVehicle((prev) => ({ ...prev, [field]: value }));
@@ -37,6 +37,7 @@ const AddVehicleForm = ({}) => {
           setNewVehicle((prev) => ({
             ...prev,
             ...response.Results[0],
+            policyLineId: v1(),
             BasePrice: Number(response.Results[0].BasePrice).toLocaleString(
               "en-US",
               {
@@ -50,7 +51,7 @@ const AddVehicleForm = ({}) => {
           console.error("VIN lookup failed:", error);
         });
     },
-    [newVehicle]
+    [JSON.stringify(newVehicle)]
   );
 
   return (
@@ -122,7 +123,6 @@ const AddVehicleForm = ({}) => {
                 stylingMode='filled'
                 readOnly={true}
                 label='MSRP'
-                onValueChanged={({ value }) => handleChange("BasePrice", value)}
               />
             </div>
           </Item>
@@ -136,7 +136,6 @@ const AddVehicleForm = ({}) => {
                 stylingMode='filled'
                 readOnly={true}
                 label='Make'
-                onValueChanged={({ value }) => handleChange("Make", value)}
               />
             </div>
           </Item>
@@ -150,7 +149,6 @@ const AddVehicleForm = ({}) => {
                 stylingMode='filled'
                 readOnly={true}
                 label='Model'
-                onValueChanged={({ value }) => handleChange("Model", value)}
               />
             </div>
           </Item>
@@ -160,11 +158,25 @@ const AddVehicleForm = ({}) => {
             <div className='p-2'>
               <TextBox
                 {...DefaultComponentConfig.TextBox}
-                value={newVehicle?.Series}
+                value={newVehicle?.Trim}
                 stylingMode='filled'
                 readOnly={true}
-                label='Series'
-                onValueChanged={({ value }) => handleChange("Series", value)}
+                label='Trim'
+              />
+            </div>
+          </Item>
+
+          <Item>
+            <Location row={3} col={1} colspan={1} />
+            <div className='p-2 flex justify-center'>
+              <Button
+                {...DefaultComponentConfig.Button}
+                text='Add Vehicle'
+                style={{
+                  backgroundColor: "var(--cyan-500)",
+                  height: "33px",
+                }}
+                disabled={!newVehicle?.Make}
               />
             </div>
           </Item>

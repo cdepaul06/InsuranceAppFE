@@ -33,6 +33,7 @@ const CustomerPolicyCreateForm = ({
     policyStartDate: new Date(),
     policyEndDate: new Date(),
   });
+
   const [visible, setVisible] = useState(true);
   const [accordionTitle, setAccordionTitle] = useState(``);
   const validatorRef = useRef(null);
