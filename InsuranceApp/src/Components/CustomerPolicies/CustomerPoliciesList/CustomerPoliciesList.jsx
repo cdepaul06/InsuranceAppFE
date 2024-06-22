@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import Grid from "../../Grid/Grid";
 
 const CustomerPoliciesList = ({}) => {
@@ -10,47 +10,57 @@ const CustomerPoliciesList = ({}) => {
 
   const columnDefs = [
     {
+      caption: "Policy Status",
       alignment: "left",
       dataField: "policyStatusId",
-      caption: "Status",
-      dataType: "number",
+      calculateDisplayValue: useCallback((rowData) => {
+        return rowData.policyStatusId === 1 ? "Active" : "Inactive";
+      }, []),
     },
     {
-      alignment: "left",
-      dataField: "customerPolicyId",
-      caption: "Policy ID",
-      dataType: "number",
+      caption: "Customer Name",
+      dataField: "customer.firstName",
+      calculateDisplayValue: useCallback((rowData) => {
+        return rowData.customer.lastName + ", " + rowData.customer.firstName;
+      }, []),
     },
     {
-      alignment: "left",
-      dataField: "policyTypeId",
-      caption: "Policy Type",
-      dataType: "number",
+      caption: "Policy Number",
+      dataField: "policyNumber",
     },
     {
-      alignment: "left",
-      dataField: "policyPremium",
-      caption: "Premium",
-      dataType: "currency",
-    },
-    {
-      alignment: "left",
+      caption: "Policy Start Date",
       dataField: "policyStartDate",
-      caption: "Start Date",
       dataType: "date",
     },
     {
-      alignment: "left",
+      caption: "Policy End Date",
       dataField: "policyEndDate",
-      caption: "End Date",
       dataType: "date",
+    },
+    {
+      caption: "Policy Type",
+      dataField: "policyTypeId",
+      alignment: "left",
+      calculateDisplayValue: useCallback((rowData) => {
+        return rowData.policyTypeId === 1
+          ? "Auto"
+          : rowData.policyTypeId === 2
+          ? "Home"
+          : "Specialty";
+      }, []),
+    },
+    {
+      caption: "Policy Premium",
+      dataField: "policyPremium",
+      dataType: "currency",
     },
   ];
 
   return (
     <div>
       <Grid
-        columnDefs={columnDefs}
+        columns={columnDefs}
         fetchObject={fetchObject}
         title={"Customer Policies"}
       />

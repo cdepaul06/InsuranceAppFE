@@ -21,6 +21,7 @@ import PolicyTypeSelect from "../../PolicyTypes/PolicyTypeSelect/PolicyTypeSelec
 import PolicyStatusSelect from "../../PolicyStatuses/PolicyStatusSelect/PolicyStatusSelect";
 import CustomerSelect from "../../Customers/CustomerSelect/CustomerSelect";
 import AddVehicleForm from "../../AddVehicleForm/AddVehicleForm";
+import CustomerPolicyLines from "../../CustomerPolicyLines/CustomerPolicyLines";
 
 const CustomerPolicyCreateForm = ({
   resetPopup,
@@ -32,7 +33,10 @@ const CustomerPolicyCreateForm = ({
     policyTypeId: 1, // * Auto
     policyStartDate: new Date(),
     policyEndDate: new Date(),
+    policyLines: [],
   });
+
+  console.log("### newCustomerPolicy", newCustomerPolicy);
 
   const [visible, setVisible] = useState(true);
   const [accordionTitle, setAccordionTitle] = useState(``);
@@ -90,23 +94,41 @@ const CustomerPolicyCreateForm = ({
   useEffect(() => {
     switch (newCustomerPolicy?.policyTypeId) {
       case 1:
-        setAccordionTitle(`Auto Policy Details`);
+        setAccordionTitle(`Add Vehicle Form`);
         break;
       case 2:
-        setAccordionTitle(`Home Policy Details`);
+        setAccordionTitle(`Add Property Form`);
         break;
       default:
-        setAccordionTitle(`Policy Details`);
+        setAccordionTitle(`Add Special Form`);
         break;
     }
-  }, [newCustomerPolicy?.policyTypeId]);
+  }, [JSON.stringify(newCustomerPolicy)]);
 
   const itemRender = useCallback(() => {
-    return (
-      <div className='max-h-64 scroll-smooth overflow-auto'>
-        <AddVehicleForm />
-      </div>
-    );
+    if (newCustomerPolicy?.policyTypeId === 1) {
+      return (
+        <div className='max-h-64 scroll-smooth overflow-auto'>
+          <AddVehicleForm setNewCustomerPolicy={setNewCustomerPolicy} />
+        </div>
+      );
+    } else if (newCustomerPolicy?.policyTypeId === 2) {
+      return (
+        <div className='max-h-64 scroll-smooth overflow-auto'>
+          <div>Property Form</div>
+        </div>
+      );
+    } else {
+      return (
+        <div className='max-h-64 scroll-smooth overflow-auto'>
+          <div>Special Form</div>
+        </div>
+      );
+    }
+  }, [JSON.stringify(newCustomerPolicy)]);
+
+  const handleContentReady = useCallback((e) => {
+    e.component.collapseItem(0);
   }, []);
 
   const renderContent = useCallback(() => {
@@ -114,6 +136,7 @@ const CustomerPolicyCreateForm = ({
       <ValidationGroup ref={validatorRef}>
         <div className='flex flex-col items-center'>
           <ResponsiveBox>
+            <Row ratio={1} />
             <Row ratio={1} />
             <Row ratio={1} />
             <Row ratio={1} />
@@ -207,14 +230,24 @@ const CustomerPolicyCreateForm = ({
                   collapsible={true}
                   dataSource={[{ title: `${accordionTitle}`, items: [] }]}
                   itemRender={itemRender}
-                  onContentReady={(e) => {
-                    e.component.collapseItem(0);
-                  }}
+                  onContentReady={handleContentReady}
                   style={{
                     border: "1px solid var(--cyan-500)",
                   }}
                 />
               </div>
+            </Item>
+
+            <Item>
+              <Location row={4} col={0} colspan={4} />
+              {newCustomerPolicy?.policyLines?.length > 0 && (
+                <div className='p-2'>
+                  <CustomerPolicyLines
+                    policyType={newCustomerPolicy?.policyTypeId}
+                    policyLines={newCustomerPolicy?.policyLines}
+                  />
+                </div>
+              )}
             </Item>
           </ResponsiveBox>
 

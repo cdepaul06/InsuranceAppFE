@@ -17,7 +17,7 @@ import ResponsiveBox, {
 } from "devextreme-react/responsive-box";
 import { v1 } from "uuid";
 
-const AddVehicleForm = ({}) => {
+const AddVehicleForm = ({ setNewCustomerPolicy }) => {
   const [newVehicle, setNewVehicle] = useState({});
 
   const handleChange = useCallback((field, value) => {
@@ -53,6 +53,13 @@ const AddVehicleForm = ({}) => {
     },
     [JSON.stringify(newVehicle)]
   );
+
+  const handleAddVehicle = useCallback(() => {
+    setNewCustomerPolicy((prev) => ({
+      ...prev,
+      policyLines: [...prev.policyLines, newVehicle],
+    }));
+  }, [JSON.stringify(newVehicle)]);
 
   return (
     <ValidationGroup>
@@ -177,6 +184,7 @@ const AddVehicleForm = ({}) => {
                   height: "33px",
                 }}
                 disabled={!newVehicle?.Make}
+                onClick={handleAddVehicle}
               />
             </div>
           </Item>
